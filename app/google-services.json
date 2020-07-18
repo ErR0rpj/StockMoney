@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "388170409925",
+    "firebase_url": "https://stock-money-e7d97.firebaseio.com",
+    "project_id": "stock-money-e7d97",
+    "storage_bucket": "stock-money-e7d97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388170409925:android:654709b213cd5f3621cdac",
+        "android_client_info": {
+          "package_name": "com.example.stockmoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388170409925-1hff247nair2iev5oiq5t5afq46ds13v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASdUJk2rnHopRUJhbwaNRYDWLHIacW_PM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388170409925-1hff247nair2iev5oiq5t5afq46ds13v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
