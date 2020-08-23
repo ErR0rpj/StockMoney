@@ -9,16 +9,21 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.stockmoney.HomeAdapterClass;
 import com.example.stockmoney.R;
+import com.example.stockmoney.data.StockFirebaseColumns;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class WatchlistFragment extends Fragment {
 
     private static final String LOG_TAG = WatchlistFragment.class.getSimpleName();
 
     private ListView LISThome;
+    private HomeAdapterClass adapter;
 
     //Variables for Firebase Database
     public static FirebaseDatabase mFirebaseDatabase;
@@ -28,8 +33,13 @@ public class WatchlistFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_watchlist, container, false);
+        View view = inflater.inflate(R.layout.fragment_watchlist, container, false);
 
-        return root;
+        LISThome = view.findViewById(R.id.LISThome);
+        ArrayList<StockFirebaseColumns> list = new ArrayList<>();
+        adapter = new HomeAdapterClass(getActivity(), list);
+        LISThome.setAdapter(adapter);
+
+        return view;
     }
 }
