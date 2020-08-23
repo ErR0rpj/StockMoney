@@ -1,4 +1,7 @@
 <resources>
+    <string name="facebook_application_id">872254166516586</string>
+    <string name="facebook_login_protocol_scheme">fb872254166516586</string>
+
     <string name="app_name">Stock Money</string>
     <string name="title_watchlist">Watchlist</string>
     <string name="title_portfolio">Portfolio</string>
