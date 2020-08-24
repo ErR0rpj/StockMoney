@@ -16,8 +16,9 @@ public class StockFirebaseColumns {
 
     public StockFirebaseColumns(){}
 
-    //This constructor is for feteching data from Firebase.
-    public StockFirebaseColumns(double price, String chg, String chg_percent, String symbol, int id, String name) {
+    //Upgrade this to fetch more information from Firebase database.
+    //This constructor is for fetching data from Firebase. This is in alphabetical order bcoz Firebase needs this
+    public StockFirebaseColumns(String chg, String chg_percent, int id, String name, double price, String symbol) {
         this.price = price;
         this.chg = chg;
         this.chg_percent = chg_percent;
