@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Checking internet connection, permission added in manifest-file...code starting.
+        //Checking internet connection.
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected =activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
         Log.e(LOG_TAG, "Internet Connection = " + isConnected);
 
@@ -145,12 +145,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //This is for refresh button
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
+    //This is for refresh button
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
