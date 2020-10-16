@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "388170409925-omkb2uj3itrcpaedvt6iuvjicthsfflq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stockmoney",
+            "certificate_hash": "494ba81caa37060f2239cebb9febf49339cfc9e3"
+          }
+        },
+        {
           "client_id": "388170409925-1hff247nair2iev5oiq5t5afq46ds13v.apps.googleusercontent.com",
           "client_type": 3
         }
