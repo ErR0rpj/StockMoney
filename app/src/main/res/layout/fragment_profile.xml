@@ -67,6 +67,7 @@
         android:padding="20dp">
 
         <com.google.android.material.card.MaterialCardView
+            android:theme="@style/Theme.MaterialComponents.Light"
             android:layout_height="125dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
@@ -79,11 +80,12 @@
                 android:layout_width="match_parent"
                 android:padding="5dp">
 
-                <ImageView
-                    android:layout_centerHorizontal="true"
-                    android:layout_height="30dp"
-                    android:layout_width="30dp"
-                    android:src="@drawable/moneyicon" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/moneyicon"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:src="@drawable/moneyicon" />-->
 
                 <TextView
 
@@ -110,6 +112,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:theme="@style/Theme.MaterialComponents.Light"
             android:layout_height="125dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
@@ -122,11 +125,11 @@
                 android:layout_width="match_parent"
                 android:padding="5dp">
 
-                <ImageView
-                    android:layout_centerHorizontal="true"
-                    android:layout_height="30dp"
-                    android:layout_width="30dp"
-                    android:src="@drawable/moneyicon" />
+<!--                <ImageView-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:src="@drawable/moneyicon" />-->
 
                 <TextView
 
@@ -213,9 +216,6 @@
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:text="SIGN OUT" />
-
-
-
 
 
     </LinearLayout>
