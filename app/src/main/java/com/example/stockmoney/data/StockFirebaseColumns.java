@@ -3,10 +3,10 @@ package com.example.stockmoney.data;
 //This class is the columns details of firebase database. It used in adpter class to create list.
 public class StockFirebaseColumns {
 
-    private double price;
-    //private double high; TODO: Add these whenever required. Just remove the quotes and make new...
     //TODO: ...constructor, getter and setter. Do not change the order.
-    //private double low;
+    private double price;
+    private double high;
+    private double low;
     private String chg;
     private String chg_percent;
     //private String dateTime;
@@ -18,13 +18,15 @@ public class StockFirebaseColumns {
 
     //Upgrade this to fetch more information from Firebase database.
     //This constructor is for fetching data from Firebase. This is in alphabetical order bcoz Firebase needs this
-    public StockFirebaseColumns(String chg, String chg_percent, int id, String name, double price, String symbol) {
+    public StockFirebaseColumns(String chg, String chg_percent, double high, int id, double low, String name, double price, String symbol) {
         this.price = price;
         this.chg = chg;
         this.chg_percent = chg_percent;
         this.symbol = symbol;
         this.id = id;
         this.name = name;
+        this.high = high;
+        this.low = low;
     }
 
     public void setPrice(double price) {

@@ -10,10 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.stockmoney.data.UserDetails;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -26,6 +29,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.util.Arrays;
+
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public static int funds = 0;
     public static String email = "";
     public static String uid = "";
+    public static int rank = 1;
 
     //variablesof firebase database
     public static FirebaseDatabase mFirebaseDatabase;
@@ -66,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase =FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users");
+        Log.e("mainActivty: ", mDatabaseReference.toString());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -86,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 if(user != null){
                     email = user.getEmail();
                     uid = user.getUid();
+                    Log.e("MainActivity: ", uid);
                     onSignedInInitialize(user.getDisplayName());
                 }
                 else {
@@ -96,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
                             .setIsSmartLockEnabled(false)
                             .setAvailableProviders(Arrays.asList(
                                     new AuthUI.IdpConfig.GoogleBuilder().build(),
-                                    new AuthUI.IdpConfig.EmailBuilder().build(),
-                                    new AuthUI.IdpConfig.FacebookBuilder().build()))
+                                    new AuthUI.IdpConfig.EmailBuilder().build()
+                                    ))
                             .build(),
                     RC_SIGN_IN);
                 }
@@ -130,17 +138,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //TODO: Initializing all the variables of the user and storing it in firebase
-    //This is not yet implemented.
+    //userdetails class to be made and testing.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == RC_SIGN_IN){
-            if(resultCode == RESULT_OK){
-                Toast.makeText(this, "Signed In Successfully", Toast.LENGTH_SHORT).show();
+        if(requestCode == RC_SIGN_IN) {
+            if(resultCode == RESULT_OK) {
+
+                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.hasChild(uid)) {
+                            Log.e("MainActivity/ ","Uid already in database");
+                        }
+                        else {
+                            funds = 15000;
+                            UserDetails userDetails = new UserDetails(email, funds, Username);
+                            mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uid);
+                            mDatabaseReference.setValue(userDetails);
+                            Log.e("MainActivity/ ", "User added in database.");
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                Toast.makeText(MainActivity.this, "Signed In Successfully", Toast.LENGTH_SHORT).show();
+
             }
-            else if(resultCode == RESULT_CANCELED){
-                Toast.makeText(this, "Sign In Cancelled", Toast.LENGTH_SHORT).show();
+
+            else if(resultCode == RESULT_CANCELED) {
+                Toast.makeText(MainActivity.this, "Signed In Cancelled", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
