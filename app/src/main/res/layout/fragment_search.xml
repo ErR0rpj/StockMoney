@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+
 
     <TextView
         android:id="@+id/text_search"
@@ -16,4 +20,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/editsearch"
+        android:layout_margin="10dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:paddingLeft="10dp"
+        android:hint="Search"
+        android:drawablePadding="15dp"
+        android:drawableLeft="@drawable/ic_search_black_24dp" />
+
+    <ListView
+        android:id="@+id/listviewstocks"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/editsearch"
+        android:layout_margin="10dp" />
+
+
+</RelativeLayout>
