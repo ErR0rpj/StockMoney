@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Setting variables after successful signIn.
     private void onSignedInInitialize(String username){
         Username = username;
     }
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
     }
 
-    //Initializing all the variables of the user and storing it in firebase
+    //TODO: Initializing all the variables of the user and storing it in firebase
     //This is not yet implemented.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
