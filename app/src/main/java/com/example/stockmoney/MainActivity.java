@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("MainActivity/ ","Uid already in database");
                         }
                         else {
-                            funds = 15000;
+                            funds = 1000000;
                             UserDetails userDetails = new UserDetails(email, funds, Username);
                             mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uid);
                             mDatabaseReference.setValue(userDetails);

@@ -1,15 +1,19 @@
 package com.example.stockmoney.data;
 
+import co.example.stockmoney.StocksOwn;
+
 public class UserDetails {
     private String email;
     private String username;
     private int funds;
+    private StocksOwn stocksOwn;
 
     public UserDetails(){}
 
-    public UserDetails(String email, int funds, String username) {
+    public UserDetails(String email, int funds, StocksOwn stocksOwn, String username) {
         this.email = email;
         this.funds = funds;
+        this.stocksOwn = stocksOwn;
         this.username = username;
     }
 
@@ -25,6 +29,10 @@ public class UserDetails {
         this.funds = funds;
     }
 
+    public void setStocksOwn(StocksOwn stocksOwn){
+        this.stocksOwn = stocksOwn;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -35,5 +43,9 @@ public class UserDetails {
 
     public int getFunds() {
         return funds;
+    }
+
+    public StocksOwn getStocksOwn(){
+        return stocksOwn;
     }
 }
