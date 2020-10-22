@@ -31,6 +31,7 @@ import androidx.navigation.ui.NavigationUI;
 import java.util.Arrays;
 
 import com.google.firebase.database.ValueEventListener;
+import com.example.stockmoney.data.UserDetails;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,11 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     //Information of users which are used everywhere in the app
-    public static String Username = "";
-    public static int funds = 0;
-    public static String email = "";
-    public static String uid = "";
-    public static int rank = 1;
+    public static UserDetails currentUser = new UserDetails();
 
     //variablesof firebase database
     public static FirebaseDatabase mFirebaseDatabase;
@@ -72,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase =FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users");
-        Log.e("mainActivty: ", mDatabaseReference.toString());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -91,9 +87,9 @@ public class MainActivity extends AppCompatActivity {
                 user = firebaseAuth.getCurrentUser();
 
                 if(user != null){
-                    email = user.getEmail();
-                    uid = user.getUid();
-                    Log.e("MainActivity: ", uid);
+                    currentUser.setEmail(user.getEmail());
+                    currentUser.setUid(user.getUid());
+                    Log.e("MainActivity: ", currentUser.getUid());
                     onSignedInInitialize(user.getDisplayName());
                 }
                 else {
@@ -117,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
 
     //Setting variables after successful signIn.
     private void onSignedInInitialize(String username){
-        Username = username;
+        currentUser.setUsername(username);
     }
 
     //After logout cleaning up the variables
     private void onSignedOutCleanup(){
-        Username = "";
+        currentUser.setUsername("");
     }
 
     @Override
@@ -150,13 +146,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.hasChild(uid)) {
+                        if(dataSnapshot.hasChild(currentUser.getUid())) {
                             Log.e("MainActivity/ ","Uid already in database");
                         }
                         else {
-                            funds = 1000000;
-                            UserDetails userDetails = new UserDetails(email, funds, Username);
-                            mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uid);
+                            currentUser.setFunds(1000000.00);
+                            currentUser.setRank(-1);
+                            UserDetails userDetails = currentUser;
+                            mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
                             mDatabaseReference.setValue(userDetails);
                             Log.e("MainActivity/ ", "User added in database.");
                         }
