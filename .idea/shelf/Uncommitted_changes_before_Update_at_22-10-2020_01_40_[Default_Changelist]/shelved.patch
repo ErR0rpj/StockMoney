@@ -1,0 +1,590 @@
+Index: app/src/main/res/layout/fragment_search.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n\r\n\r\n\r\n    <TextView\r\n        android:id=\"@+id/text_search\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"8dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:layout_marginEnd=\"8dp\"\r\n        android:textAlignment=\"center\"\r\n        android:textSize=\"20sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <EditText\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"45dp\"\r\n        android:id=\"@+id/editsearch\"\r\n        android:layout_margin=\"10dp\"\r\n        android:maxLines=\"1\"\r\n        android:singleLine=\"true\"\r\n        android:paddingLeft=\"10dp\"\r\n        android:hint=\"Search\"\r\n        android:drawablePadding=\"15dp\"\r\n        android:drawableLeft=\"@drawable/ic_search_black_24dp\" />\r\n\r\n    <ListView\r\n        android:id=\"@+id/listviewstocks\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"fill_parent\"\r\n        android:layout_below=\"@id/editsearch\"\r\n        android:layout_margin=\"10dp\" />\r\n\r\n\r\n</RelativeLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_search.xml	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ app/src/main/res/layout/fragment_search.xml	(date 1603308096392)
+@@ -24,7 +24,7 @@
+     <EditText
+         android:layout_width="match_parent"
+         android:layout_height="45dp"
+-        android:id="@+id/editsearch"
++        android:id="@+id/editsearchs"
+         android:layout_margin="10dp"
+         android:maxLines="1"
+         android:singleLine="true"
+@@ -37,7 +37,7 @@
+         android:id="@+id/listviewstocks"
+         android:layout_width="match_parent"
+         android:layout_height="fill_parent"
+-        android:layout_below="@id/editsearch"
++        android:layout_below="@id/editsearchs"
+         android:layout_margin="10dp" />
+ 
+ 
+Index: app/src/main/java/com/example/stockmoney/ui/search/SearchFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.stockmoney.ui.search;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.Nullable;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.lifecycle.Observer;\r\nimport androidx.lifecycle.ViewModelProviders;\r\n\r\nimport com.example.stockmoney.R;\r\n\r\npublic class SearchFragment extends Fragment {\r\n\r\n    private SearchViewModel searchViewModel;\r\n\r\n    public View onCreateView(@NonNull LayoutInflater inflater,\r\n                             ViewGroup container, Bundle savedInstanceState) {\r\n        searchViewModel =\r\n                ViewModelProviders.of(this).get(SearchViewModel.class);\r\n        View root = inflater.inflate(R.layout.fragment_search, container, false);\r\n        final TextView textView = root.findViewById(R.id.text_search);\r\n        searchViewModel.getText().observe(this, new Observer<String>() {\r\n            @Override\r\n            public void onChanged(@Nullable String s) {\r\n                textView.setText(s);\r\n            }\r\n        });\r\n        return root;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/stockmoney/ui/search/SearchFragment.java	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ app/src/main/java/com/example/stockmoney/ui/search/SearchFragment.java	(date 1603310935477)
+@@ -1,10 +1,14 @@
+ package com.example.stockmoney.ui.search;
+ 
++import android.icu.text.StringSearch;
+ import android.os.Bundle;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.EditText;
++import android.widget.ListView;
+ import android.widget.TextView;
++import android.widget.Toast;
+ 
+ import androidx.annotation.Nullable;
+ import androidx.annotation.NonNull;
+@@ -12,10 +16,36 @@
+ import androidx.lifecycle.Observer;
+ import androidx.lifecycle.ViewModelProviders;
+ 
++import com.android.volley.Request;
++import com.android.volley.RequestQueue;
++import com.android.volley.Response;
++import com.android.volley.VolleyError;
++import com.android.volley.toolbox.StringRequest;
++import com.android.volley.toolbox.Volley;
++import com.example.stockmoney.MainActivity;
+ import com.example.stockmoney.R;
++import com.example.stockmoney.mystockadapter;
++import com.example.stockmoney.stockmodel;
++
++import org.json.JSONArray;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.util.ArrayList;
++import java.util.List;
+ 
+ public class SearchFragment extends Fragment {
+ 
++    EditText editsearchs;
++    ListView listViewstocks;
++
++
++    public static List<stockmodel> stockmodelList = new ArrayList<>();
++    stockmodel stockmodel;
++    mystockadapter mystockadapter;
++
++
++
+     private SearchViewModel searchViewModel;
+ 
+     public View onCreateView(@NonNull LayoutInflater inflater,
+@@ -28,8 +58,89 @@
+             @Override
+             public void onChanged(@Nullable String s) {
+                 textView.setText(s);
++
++
++
++
+             }
+         });
++       // return root;
++
++
++        editsearchs =  root.findViewById(R.id.editsearchs);
++        listViewstocks = root.findViewById(R.id.listviewstocks);
++
++        
++
++
++
++
++     fetchData();
++
++
++
+         return root;
+     }
++
++    private void fetchData() {
++
++        String url = "https://fcsapi.com/api-v2/stock/latest?id=1,2,3,4,5&access_key=aOccqp276qs0Ue5a0CVjMG91IMTghjKMGr8gnr9iI2LwG5";
++
++        final StringSearch request = new StringRequest(Request.Method.GET, url,
++                new Response.Listener<String>() {
++            @Override
++            public void onResponse(String response) {
++
++                try {
++                    JSONArray jsonArray = new JSONArray(response);
++
++                    for(int i=0;i<jsonArray.length();i++)
++                    {
++                        JSONObject jsonObject = jsonArray.getJSONObject(i);
++
++                        String price = jsonObject.getString("price");
++                        String high = jsonObject.getString("high");
++                        String low = jsonObject.getString("low");
++                        String chg = jsonObject.getString("chg");
++                        String chg_percent = jsonObject.getString("chg_percent");
++                        String dateTime = jsonObject.getString("dateTime");
++                        String symbol = jsonObject.getString("symbol");
++                        String id = jsonObject.getString("id");
++
++                        JSONObject object = jsonObject.getJSONObject("symbol");
++                        String synbol = object.getString("symbol");
++
++
++                        stockmodel = new stockmodel(price,high,low,chg,chg_percent,dateTime,symbol,id);
++                        stockmodelList.add(stockmodel);
++
++                    }
++
++                    mystockadapter = new mystockadapter(SearchFragment.this,stockmodelList);
++                    listViewstocks.setAdapter(mystockadapter);
++
++
++
++                } catch (JSONException e) {
++                    e.printStackTrace();
++                }
++
++
++            }
++
++        }, new Response.ErrorListener() {
++            @Override
++            public void onErrorResponse(VolleyError error) {
++
++                Toast.makeText(SearchFragment.this, error.getMessage(), Toast.LENGTH_SHORT).show();
++            }
++        });
++
++        RequestQueue requestQueue = Volley.newRequestQueue(this);
++        requestQueue.add(request);
++
++
++
++    }
++
+ }
+\ No newline at end of file
+Index: ../app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'com.google.gms.google-services'\r\n\r\nandroid {\r\n    compileSdkVersion 29\r\n    buildToolsVersion \"29.0.2\"\r\n    defaultConfig {\r\n        applicationId \"com.example.stockmoney\"\r\n        minSdkVersion 23\r\n        targetSdkVersion 29\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(dir: 'libs', include: ['*.jar'])\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'com.google.android.material:material:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'\r\n    implementation 'androidx.navigation:navigation-fragment:2.3.0'\r\n    implementation 'androidx.navigation:navigation-ui:2.3.0'\r\n    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n    \r\n    // Below are dependencies of firebase. Dont put it above.\r\n    implementation 'com.google.firebase:firebase-analytics:17.5.0'\r\n    implementation 'com.google.firebase:firebase-auth:19.3.2'\r\n    implementation 'com.google.firebase:firebase-database:19.3.1'\r\n    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'\r\n    implementation 'com.google.firebase:firebase-analytics:17.5.0'\r\n    implementation 'com.google.firebase:firebase-auth:19.3.2'\r\n    implementation 'com.google.firebase:firebase-database:19.3.1'\r\n    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'\r\n    implementation 'com.facebook.android:facebook-login:[5,6)'\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../app/build.gradle	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ ../app/build.gradle	(date 1603221108842)
+@@ -28,6 +28,8 @@
+     implementation 'androidx.navigation:navigation-fragment:2.3.0'
+     implementation 'androidx.navigation:navigation-ui:2.3.0'
+     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
++    implementation 'com.google.android.gms:play-services-maps:17.0.0'
++    implementation 'com.google.android.gms:play-services-ads:18.3.0'
+     testImplementation 'junit:junit:4.12'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+Index: app/src/main/res/layout/list_custom_item.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/list_custom_item.xml	(date 1603220243081)
++++ app/src/main/res/layout/list_custom_item.xml	(date 1603220243081)
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:orientation="horizontal"
++    android:layout_margin="5dp">
++
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:id="@+id/stocksymbol"
++        android:layout_gravity="center_vertical"
++        android:text="Stock Symbol"
++        android:textSize="25sp"
++        android:textStyle="bold"
++        android:paddingLeft="15dp" />
++
++
++</LinearLayout>
+\ No newline at end of file
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\n\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n        \r\n    }\r\n    dependencies {\r\n        classpath 'com.android.tools.build:gradle:4.0.2'\r\n        classpath 'com.google.gms:google-services:4.3.3'\r\n        \r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n        \r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ build.gradle	(date 1603308913068)
+@@ -7,7 +7,7 @@
+         
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:4.0.2'
++        classpath 'com.android.tools.build:gradle:4.1.0'
+         classpath 'com.google.gms:google-services:4.3.3'
+         
+         // NOTE: Do not place your application dependencies here; they belong
+Index: ../.idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../.idea/compiler.xml	(date 1603221108872)
++++ ../.idea/compiler.xml	(date 1603221108872)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/example/stockmoney/stockmodel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/stockmoney/stockmodel.java	(date 1603219554747)
++++ app/src/main/java/com/example/stockmoney/stockmodel.java	(date 1603219554747)
+@@ -0,0 +1,85 @@
++package com.example.stockmoney;
++
++public class stockmodel {
++    private String price,high,low,chg,chg_percent,dateTime,symbol,id;
++
++    public stockmodel() {
++    }
++
++    public stockmodel(String price,String high,String low,String chg,String chg_percent,String dateTime,String symbol,String id) {
++
++        this.price = price;
++        this.high = high;
++        this.low = low;
++        this.chg = chg;
++        this.chg_percent = chg_percent;
++        this.dateTime = dateTime;
++        this.symbol = symbol;
++        this.id = id;
++
++    }
++
++    public String getPrice() {
++        return price;
++    }
++
++    public void setPrice(String price) {
++        this.price = price;
++    }
++
++    public String getHigh() {
++        return high;
++    }
++
++    public void setHigh(String high) {
++        this.high = high;
++    }
++
++    public String getLow() {
++        return low;
++    }
++
++    public void setLow(String low) {
++        this.low = low;
++    }
++
++    public String getChg() {
++        return chg;
++    }
++
++    public void setChg(String chg) {
++        this.chg = chg;
++    }
++
++    public String getChg_percent() {
++        return chg_percent;
++    }
++
++    public void setChg_percent(String chg_percent) {
++        this.chg_percent = chg_percent;
++    }
++
++    public String getDateTime() {
++        return dateTime;
++    }
++
++    public void setDateTime(String dateTime) {
++        this.dateTime = dateTime;
++    }
++
++    public String getSymbol() {
++        return symbol;
++    }
++
++    public void setSymbol(String symbol) {
++        this.symbol = symbol;
++    }
++
++    public String getId() {
++        return id;
++    }
++
++    public void setId(String id) {
++        this.id = id;
++    }
++}
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'com.google.gms.google-services'\r\n\r\nandroid {\r\n    compileSdkVersion 29\r\n    buildToolsVersion \"29.0.2\"\r\n    defaultConfig {\r\n        applicationId \"com.example.stockmoney\"\r\n        minSdkVersion 23\r\n        targetSdkVersion 29\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(dir: 'libs', include: ['*.jar'])\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'com.google.android.material:material:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'\r\n    implementation 'androidx.navigation:navigation-fragment:2.3.0'\r\n    implementation 'androidx.navigation:navigation-ui:2.3.0'\r\n    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n    \r\n    // Below are dependencies of firebase. Dont put it above.\r\n    implementation 'com.google.firebase:firebase-analytics:17.5.0'\r\n    implementation 'com.google.firebase:firebase-auth:19.3.2'\r\n    implementation 'com.google.firebase:firebase-database:19.3.1'\r\n    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'\r\n    implementation 'com.google.firebase:firebase-analytics:17.5.0'\r\n    implementation 'com.google.firebase:firebase-auth:19.3.2'\r\n    implementation 'com.google.firebase:firebase-database:19.3.1'\r\n    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'\r\n    implementation 'com.facebook.android:facebook-login:[5,6)'\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ app/build.gradle	(date 1603308824698)
+@@ -28,6 +28,7 @@
+     implementation 'androidx.navigation:navigation-fragment:2.3.0'
+     implementation 'androidx.navigation:navigation-ui:2.3.0'
+     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
++    implementation 'com.android.volley:volley:1.1.1'
+     testImplementation 'junit:junit:4.12'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+Index: app/src/main/java/com/example/stockmoney/mystockadapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/stockmoney/mystockadapter.java	(date 1603220775003)
++++ app/src/main/java/com/example/stockmoney/mystockadapter.java	(date 1603220775003)
+@@ -0,0 +1,41 @@
++package com.example.stockmoney;
++
++import android.content.Context;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.ArrayAdapter;
++import android.widget.TextView;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++
++import java.util.List;
++
++public class mystockadapter  extends ArrayAdapter<stockmodel> {
++
++    private Context context;
++    private List<stockmodel> stockmodelList;
++
++    public mystockadapter(Context context,List<stockmodel> stockmodelList) {
++        super(context, R.layout.list_custom_item,stockmodelList);
++
++
++        this.context = context;
++        this.stockmodelList = stockmodelList;
++    }
++
++    @NonNull
++    @Override
++    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
++
++        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_custom_item,null,true);
++
++        TextView stocksymbol = view.findViewById(R.id.stocksymbol);
++        stocksymbol.setText(stockmodelList.get(position).getSymbol());
++
++
++
++        return view;
++    }
++}
+Index: ../.idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"delegatedBuild\" value=\"false\" />\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../.idea/gradle.xml	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ ../.idea/gradle.xml	(date 1603221108886)
+@@ -15,6 +15,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"delegatedBuild\" value=\"false\" />\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ .idea/gradle.xml	(date 1603179974909)
+@@ -15,6 +15,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Mon Aug 24 15:22:43 IST 2020\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-6.1.1-all.zip\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1603308913126)
+@@ -1,6 +1,6 @@
+-#Mon Aug 24 15:22:43 IST 2020
++#Thu Oct 22 01:05:13 IST 2020
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.1.1-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-bin.zip
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ .idea/misc.xml	(date 1603179974879)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: ../app/src/main/res/layout/fragment_profile.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\">\r\n\r\n\r\n    <TextView\r\n        android:id=\"@+id/text_profile\"\r\n        android:text=\"PROFILE\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"8dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:layout_marginEnd=\"8dp\"\r\n        android:textAlignment=\"center\"\r\n        android:textSize=\"20sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"200dp\"\r\n        android:background=\"#fece2f\"\r\n        android:padding=\"20dp\">\r\n\r\n        <ImageButton\r\n            android:id=\"@+id/profile_image\"\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"100dp\"\r\n            android:layout_centerVertical=\"true\"\r\n            android:src=\"@drawable/fui_ic_anonymous_white_24dp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/fullname_field\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_centerVertical=\"true\"\r\n            android:layout_marginLeft=\"10dp\"\r\n            android:layout_toRightOf=\"@+id/profile_image\"\r\n            android:includeFontPadding=\"false\"\r\n            android:text=\"Sumit Ojha\"\r\n            android:textColor=\"#000\"\r\n            android:textSize=\"20sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/username_field\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/fullname_field\"\r\n            android:layout_marginLeft=\"10dp\"\r\n            android:layout_toRightOf=\"@+id/profile_image\"\r\n            android:includeFontPadding=\"false\"\r\n            android:text=\"Sumitsojha8\"\r\n            android:textSize=\"14sp\" />\r\n\r\n\r\n    </RelativeLayout>\r\n\r\n    <LinearLayout\r\n\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"10dp\"\r\n        android:layout_width=\"match_parent\"\r\n        android:padding=\"20dp\">\r\n\r\n        <com.google.android.material.card.MaterialCardView\r\n            android:theme=\"@style/Theme.MaterialComponents.Light\"\r\n            android:layout_height=\"125dp\"\r\n            android:layout_margin=\"10dp\"\r\n            android:layout_weight=\"1\"\r\n            android:layout_width=\"0dp\"\r\n            app:cardBackgroundColor=\"#fece2f\"\r\n            app:cardElevation=\"10dp\">\r\n\r\n            <RelativeLayout\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_width=\"match_parent\"\r\n                android:padding=\"5dp\">\r\n\r\n<!--                <ImageView-->\r\n<!--                    android:id=\"@+id/moneyicon\"-->\r\n<!--                    android:layout_width=\"30dp\"-->\r\n<!--                    android:layout_height=\"30dp\"-->\r\n<!--                    android:layout_centerHorizontal=\"true\"-->\r\n<!--                    android:src=\"@drawable/moneyicon\" />-->\r\n\r\n                <TextView\r\n\r\n                    android:id=\"@+id/payment_label\"\r\n                    android:includeFontPadding=\"false\"\r\n                    android:layout_centerInParent=\"true\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:text=\"MONEY\"\r\n                    android:textSize=\"20sp\" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/payment_desc\"\r\n                    android:includeFontPadding=\"false\"\r\n                    android:layout_below=\"@id/payment_label\"\r\n                    android:layout_centerHorizontal=\"true\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:text=\"$10000\"\r\n                    android:textSize=\"20sp\" />\r\n\r\n            </RelativeLayout>\r\n\r\n        </com.google.android.material.card.MaterialCardView>\r\n\r\n        <com.google.android.material.card.MaterialCardView\r\n            android:theme=\"@style/Theme.MaterialComponents.Light\"\r\n            android:layout_height=\"125dp\"\r\n            android:layout_margin=\"10dp\"\r\n            android:layout_weight=\"1\"\r\n            android:layout_width=\"0dp\"\r\n            app:cardBackgroundColor=\"#fece2f\"\r\n            app:cardElevation=\"10dp\">\r\n\r\n            <RelativeLayout\r\n                android:layout_height=\"match_parent\"\r\n                android:layout_width=\"match_parent\"\r\n                android:padding=\"5dp\">\r\n\r\n<!--                <ImageView-->\r\n<!--                    android:layout_centerHorizontal=\"true\"-->\r\n<!--                    android:layout_height=\"30dp\"-->\r\n<!--                    android:layout_width=\"30dp\"-->\r\n<!--                    android:src=\"@drawable/moneyicon\" />-->\r\n\r\n                <TextView\r\n\r\n                    android:id=\"@+id/rank\"\r\n                    android:includeFontPadding=\"false\"\r\n                    android:layout_centerInParent=\"true\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:text=\"RANK\"\r\n                    android:textSize=\"20sp\" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/rank_desc\"\r\n                    android:includeFontPadding=\"false\"\r\n                    android:layout_below=\"@id/rank\"\r\n                    android:layout_centerHorizontal=\"true\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:text=\"1\"\r\n                    android:textSize=\"20sp\" />\r\n\r\n            </RelativeLayout>\r\n\r\n        </com.google.android.material.card.MaterialCardView>\r\n\r\n\r\n</LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_width=\"match_parent\"\r\n        android:orientation=\"vertical\"\r\n        android:padding=\"20dp\">\r\n\r\n        <com.google.android.material.textfield.TextInputLayout\r\n            android:hint=\"Full Name\"\r\n            android:id=\"@+id/Name\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_width=\"match_parent\">\r\n\r\n            <com.google.android.material.textfield.TextInputEditText\r\n\r\n                android:drawablePadding=\"10dp\"\r\n                android:text=\"Sumit Ojha\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_width=\"match_parent\" />\r\n\r\n        </com.google.android.material.textfield.TextInputLayout>\r\n\r\n        <com.google.android.material.textfield.TextInputLayout\r\n            android:hint=\"Mobile Number\"\r\n            android:id=\"@+id/Phonenumber\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_width=\"match_parent\">\r\n\r\n            <com.google.android.material.textfield.TextInputEditText\r\n\r\n                android:drawablePadding=\"10dp\"\r\n                android:text=\"7773029320\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_width=\"match_parent\" />\r\n\r\n        </com.google.android.material.textfield.TextInputLayout>\r\n\r\n        <com.google.android.material.textfield.TextInputLayout\r\n            android:hint=\"Email\"\r\n            android:id=\"@+id/full_name_profile\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_width=\"match_parent\">\r\n\r\n            <com.google.android.material.textfield.TextInputEditText\r\n\r\n                android:drawablePadding=\"10dp\"\r\n                android:text=\"greatsojha88@gmail.com\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_width=\"match_parent\" />\r\n\r\n        </com.google.android.material.textfield.TextInputLayout>\r\n\r\n\r\n        <Button\r\n            android:background=\"#fece2f\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"30dp\"\r\n            android:layout_width=\"match_parent\"\r\n            android:text=\"SIGN OUT\" />\r\n\r\n\r\n    </LinearLayout>\r\n\r\n\r\n\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../app/src/main/res/layout/fragment_profile.xml	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ ../app/src/main/res/layout/fragment_profile.xml	(date 1603221127172)
+@@ -67,7 +67,6 @@
+         android:padding="20dp">
+ 
+         <com.google.android.material.card.MaterialCardView
+-            android:theme="@style/Theme.MaterialComponents.Light"
+             android:layout_height="125dp"
+             android:layout_margin="10dp"
+             android:layout_weight="1"
+@@ -80,12 +79,11 @@
+                 android:layout_width="match_parent"
+                 android:padding="5dp">
+ 
+-<!--                <ImageView-->
+-<!--                    android:id="@+id/moneyicon"-->
+-<!--                    android:layout_width="30dp"-->
+-<!--                    android:layout_height="30dp"-->
+-<!--                    android:layout_centerHorizontal="true"-->
+-<!--                    android:src="@drawable/moneyicon" />-->
++                <ImageView
++                    android:layout_centerHorizontal="true"
++                    android:layout_height="30dp"
++                    android:layout_width="30dp"
++                    android:src="@drawable/moneyicon" />
+ 
+                 <TextView
+ 
+@@ -112,7 +110,6 @@
+         </com.google.android.material.card.MaterialCardView>
+ 
+         <com.google.android.material.card.MaterialCardView
+-            android:theme="@style/Theme.MaterialComponents.Light"
+             android:layout_height="125dp"
+             android:layout_margin="10dp"
+             android:layout_weight="1"
+@@ -125,11 +122,11 @@
+                 android:layout_width="match_parent"
+                 android:padding="5dp">
+ 
+-<!--                <ImageView-->
+-<!--                    android:layout_centerHorizontal="true"-->
+-<!--                    android:layout_height="30dp"-->
+-<!--                    android:layout_width="30dp"-->
+-<!--                    android:src="@drawable/moneyicon" />-->
++                <ImageView
++                    android:layout_centerHorizontal="true"
++                    android:layout_height="30dp"
++                    android:layout_width="30dp"
++                    android:src="@drawable/moneyicon" />
+ 
+                 <TextView
+ 
+@@ -218,6 +215,9 @@
+             android:text="SIGN OUT" />
+ 
+ 
++
++
++
+     </LinearLayout>
+ 
+ 
+Index: ../.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../.idea/misc.xml	(revision 141001c1c5f90cff04d758c9501f8d88b3cd5934)
++++ ../.idea/misc.xml	(date 1603221127295)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1603179974893)
++++ .idea/compiler.xml	(date 1603179974893)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file

@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Update_at_22-10-2020_01_40_[Default_Changelist]" date="1603311053372" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22-10-2020_01_40_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 22-10-2020 01:40 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../app/src/main/res/drawable/moneyprofile.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22-10-2020_01_40_[Default_Changelist]/moneyprofile.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../app/src/main/res/drawable-v24/moneyprofile.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22-10-2020_01_40_[Default_Changelist]/moneyprofile1.png" />
+  </binary>
+</changelist>

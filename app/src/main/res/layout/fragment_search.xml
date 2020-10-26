@@ -24,7 +24,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:id="@+id/editsearch"
+        android:id="@+id/editsearchs"
         android:layout_margin="10dp"
         android:maxLines="1"
         android:singleLine="true"
@@ -37,7 +37,7 @@
         android:id="@+id/listviewstocks"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/editsearch"
+        android:layout_below="@id/editsearchs"
         android:layout_margin="10dp" />
 
 
