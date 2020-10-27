@@ -35,10 +35,10 @@ public class ProfileFragment extends Fragment {
         funds_field = view.findViewById(R.id.funds_field);
         rank_field = view.findViewById(R.id.rank_field);
 
-        ETuserName.setText(MainActivity.Username);
-        ETemail.setText(MainActivity.email);
-        email_field.setText(MainActivity.email);
-        userName_field.setText(MainActivity.Username);
+        ETuserName.setText(MainActivity.currentUser.getUsername());
+        ETemail.setText(MainActivity.currentUser.getEmail());
+        email_field.setText(MainActivity.currentUser.getEmail());
+        userName_field.setText(MainActivity.currentUser.getUsername());
 //        funds_field.setText(MainActivity.funds);
 //        rank_field.setText(MainActivity.rank);
 
