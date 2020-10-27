@@ -58,68 +58,57 @@ public class SearchFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        searchViewModel =
-                ViewModelProviders.of(this).get(SearchViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_search, container, false);
-        final TextView textView = root.findViewById(R.id.text_search);
-        searchViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
 
-
-
-
-            }
-        });
        // return root;
 
 
         editsearchs =  root.findViewById(R.id.editsearchs);
         listViewstocks = root.findViewById(R.id.listviewstocks);
 
+        fetchData();
 
+         listViewstocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+             @Override
+             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    startActivity(new Intent(getApplicationContext(), StockDetailActivity.class).putExtra("position",position));
+             }
+         });
 
+         editsearchs.addTextChangedListener(new TextWatcher() {
+             @Override
+             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+             }
 
+             @Override
+             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-     fetchData();
+                  mystockadapter.getFilter().filter(s);
+                  mystockadapter.notifyDataSetChanged();
+             }
 
-     listViewstocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-         @Override
-         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getApplicationContext(), StockDetailActivity.class).putExtra("position",position));
-         }
-     });
+             @Override
+             public void afterTextChanged(Editable s) {
 
-     editsearchs.addTextChangedListener(new TextWatcher() {
-         @Override
-         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-         }
-
-         @Override
-         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-              mystockadapter.getFilter().filter(s);
-              mystockadapter.notifyDataSetChanged();
-         }
-
-         @Override
-         public void afterTextChanged(Editable s) {
-
-         }
-     });
-
-
+             }
+         });
 
         return root;
     }
+
+
          @Override
          public  boolean onOptionsItemSelected(@NonNull MenuItem item)
          {
-             if(item.getItemId()==android.R.id.home)
-                 finalize();
+             if(item.getItemId()==android.R.id.home) {
+                 try {
+                     finalize();
+                 } catch (Throwable throwable) {
+                     throwable.printStackTrace();
+                 }
+             }
 
              return super.onOptionsItemSelected(item);
          }
@@ -130,7 +119,7 @@ public class SearchFragment extends Fragment {
 
         String url = "https://fcsapi.com/api-v2/stock/latest?id=1,2,3,4,5&access_key=aOccqp276qs0Ue5a0CVjMG91IMTghjKMGr8gnr9iI2LwG5";
 
-        final StringSearch request = new StringRequest(Request.Method.GET, url,
+        final StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -176,11 +165,11 @@ public class SearchFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(SearchFragment.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(request);
 
         
