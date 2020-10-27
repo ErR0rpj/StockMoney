@@ -1,5 +1,6 @@
 package com.example.stockmoney;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ public class mystockadapter  extends ArrayAdapter<stockmodel> {
     private List<stockmodel> stockmodelList;
     private List<stockmodel> stockmodelListfilterd;
 
-    public mystockadapter(SearchFragment context, List<stockmodel> stockmodelList) {
+    public mystockadapter(Context context, List<stockmodel> stockmodelList) {
         super(context, R.layout.list_custom_item,stockmodelList);
 
 
