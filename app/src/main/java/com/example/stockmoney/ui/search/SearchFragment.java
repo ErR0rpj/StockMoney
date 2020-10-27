@@ -72,7 +72,7 @@ public class SearchFragment extends Fragment {
          listViewstocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              @Override
              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    startActivity(new Intent(getApplicationContext(), StockDetailActivity.class).putExtra("position",position));
+                    startActivity(new Intent(getContext(), StockDetailActivity.class).putExtra("position",position));
              }
          });
 
@@ -149,7 +149,7 @@ public class SearchFragment extends Fragment {
 
                     }
 
-                    mystockadapter = new mystockadapter(SearchFragment.this,stockmodelList);
+                    mystockadapter = new mystockadapter(getActivity(),stockmodelList);
                     listViewstocks.setAdapter(mystockadapter);
 
 
