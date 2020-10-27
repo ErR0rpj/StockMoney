@@ -1,10 +1,15 @@
 package com.example.stockmoney.ui.search;
 
+import android.content.Intent;
 import android.icu.text.StringSearch;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.stockmoney.MainActivity;
 import com.example.stockmoney.R;
+import com.example.stockmoney.StockDetailActivity;
 import com.example.stockmoney.mystockadapter;
 import com.example.stockmoney.stockmodel;
 
@@ -33,6 +39,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class SearchFragment extends Fragment {
 
@@ -70,17 +78,53 @@ public class SearchFragment extends Fragment {
         editsearchs =  root.findViewById(R.id.editsearchs);
         listViewstocks = root.findViewById(R.id.listviewstocks);
 
-        
+
 
 
 
 
      fetchData();
 
+     listViewstocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         @Override
+         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getApplicationContext(), StockDetailActivity.class).putExtra("position",position));
+         }
+     });
+
+     editsearchs.addTextChangedListener(new TextWatcher() {
+         @Override
+         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+         }
+
+         @Override
+         public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+              mystockadapter.getFilter().filter(s);
+              mystockadapter.notifyDataSetChanged();
+         }
+
+         @Override
+         public void afterTextChanged(Editable s) {
+
+         }
+     });
+
 
 
         return root;
     }
+         @Override
+         public  boolean onOptionsItemSelected(@NonNull MenuItem item)
+         {
+             if(item.getItemId()==android.R.id.home)
+                 finalize();
+
+             return super.onOptionsItemSelected(item);
+         }
+
+
 
     private void fetchData() {
 
@@ -108,7 +152,7 @@ public class SearchFragment extends Fragment {
                         String id = jsonObject.getString("id");
 
                         JSONObject object = jsonObject.getJSONObject("symbol");
-                        String synbol = object.getString("symbol");
+                    //    String symbol = object.getString("symbol");
 
 
                         stockmodel = new stockmodel(price,high,low,chg,chg_percent,dateTime,symbol,id);
@@ -139,6 +183,7 @@ public class SearchFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
 
+        
 
 
     }
