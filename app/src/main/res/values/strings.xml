@@ -1,24 +1,10 @@
 <resources>
-    <!--    <string name="facebook_application_id">872254166516586</string>-->
-    <!--    <string name="facebook_login_protocol_scheme">fb872254166516586</string>-->
+<!--    <string name="facebook_application_id">872254166516586</string>-->
+<!--    <string name="facebook_login_protocol_scheme">fb872254166516586</string>-->
 
     <string name="app_name">Stock Money</string>
     <string name="title_watchlist">Watchlist</string>
     <string name="title_portfolio">Portfolio</string>
     <string name="title_search">Search</string>
     <string name="title_profile">Profile</string>
-    <string name="title_activity_stock_detail">StockDetailActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
