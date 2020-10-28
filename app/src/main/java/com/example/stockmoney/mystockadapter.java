@@ -46,6 +46,7 @@ public class mystockadapter  extends ArrayAdapter<stockmodel> {
         return view;
     }
 
+
     @Override
     public int getCount() {
         return stockmodelListfilterd.size();

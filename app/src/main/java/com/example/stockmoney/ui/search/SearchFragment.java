@@ -5,6 +5,7 @@ import android.icu.text.StringSearch;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,8 +53,6 @@ public class SearchFragment extends Fragment {
     stockmodel stockmodel;
     mystockadapter mystockadapter;
 
-
-
     private SearchViewModel searchViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,6 +67,9 @@ public class SearchFragment extends Fragment {
         listViewstocks = root.findViewById(R.id.listviewstocks);
 
         fetchData();
+
+        listViewstocks.setAdapter(mystockadapter);
+
 
          listViewstocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              @Override
@@ -125,7 +127,13 @@ public class SearchFragment extends Fragment {
             public void onResponse(String response) {
 
                 try {
-                    JSONArray jsonArray = new JSONArray(response);
+                    JSONObject jsonObject1 = new JSONObject(response);
+
+                     //jsonArray -- jsonObject
+
+                    JSONArray jsonArray = jsonObject1.getJSONArray("response");
+
+                    Log.e("SearchFragment: json: ", jsonArray.toString());
 
                     for(int i=0;i<jsonArray.length();i++)
                     {
@@ -140,22 +148,21 @@ public class SearchFragment extends Fragment {
                         String symbol = jsonObject.getString("symbol");
                         String id = jsonObject.getString("id");
 
-                        JSONObject object = jsonObject.getJSONObject("symbol");
-                    //    String symbol = object.getString("symbol");
-
 
                         stockmodel = new stockmodel(price,high,low,chg,chg_percent,dateTime,symbol,id);
                         stockmodelList.add(stockmodel);
+                        Log.e("SearchFragment: price ", price);
 
                     }
 
-                    mystockadapter = new mystockadapter(getActivity(),stockmodelList);
+                    mystockadapter = new mystockadapter(getActivity(), stockmodelList);
                     listViewstocks.setAdapter(mystockadapter);
 
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e("StockFragment: json", "response nhi mila");
                 }
 
 
@@ -166,13 +173,14 @@ public class SearchFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("StockFragment: respo", "response nhi mila");
             }
         });
 
+        Log.e("SearchFragment: last: ", request.toString());
+
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(request);
-
-        
 
 
     }
