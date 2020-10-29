@@ -76,4 +76,12 @@ public class StockFirebaseColumns {
     public String getName() {
         return name;
     }
+
+    public double getHigh() {
+        return high;
+    }
+
+    public double getLow() {
+        return low;
+    }
 }

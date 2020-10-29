@@ -15,25 +15,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.stockmoney.data.StockFirebaseColumns;
-import com.example.stockmoney.ui.search.SearchFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.stockmoney.data.DataItems.stockmodelList;
+import static com.example.stockmoney.data.DataItems.stockmodelListfilterd;
 
 public class mystockadapter  extends ArrayAdapter<StockFirebaseColumns> {
 
     private static final String LOG_TAG = mystockadapter.class.getSimpleName();
 
     private Context context;
-    private List<StockFirebaseColumns> stockmodelList;
-    private List<StockFirebaseColumns> stockmodelListfilterd;
+//    private List<StockFirebaseColumns> stockmodelList;
+//    private List<StockFirebaseColumns> stockmodelListfilterd;
 
     public mystockadapter(Activity context, List<StockFirebaseColumns> stockmodelList) {
-        super(context, R.layout.list_custom_item,stockmodelList);
+        super(context, R.layout.list_custom_item, stockmodelList);
+        stockmodelListfilterd = stockmodelList;
 
         this.context = context;
-        this.stockmodelList = stockmodelList;
-        this.stockmodelListfilterd = stockmodelList;
+//        this.stockmodelList = stockmodelList;
+//        this.stockmodelListfilterd = stockmodelList;
     }
 
     @NonNull
@@ -122,7 +125,7 @@ public class mystockadapter  extends ArrayAdapter<StockFirebaseColumns> {
             protected void publishResults(CharSequence constraints, FilterResults results)
             {
                 stockmodelListfilterd = (List<StockFirebaseColumns>) results.values;
-                com.example.stockmoney.data.DataItems.stockmodelList = (List<StockFirebaseColumns>) results.values;
+//                stockmodelList = (List<StockFirebaseColumns>) results.values;
                 notifyDataSetChanged();
             }
         };
