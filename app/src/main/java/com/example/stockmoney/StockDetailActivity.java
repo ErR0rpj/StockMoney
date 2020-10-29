@@ -1,5 +1,7 @@
 package com.example.stockmoney;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,13 +11,25 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.stockmoney.data.StockFirebaseColumns;
+import com.example.stockmoney.data.StocksOwn;
 import com.example.stockmoney.services.Transactions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import static com.example.stockmoney.data.DataItems.currentUser;
 import static com.example.stockmoney.data.DataItems.stockmodelListfilterd;
 
 public class StockDetailActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = StockDetailActivity.class.getSimpleName();
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference, mDatabaseReference2;
+    private StocksOwn currentOwned;
 
     private TextView TVsymbol, TVprice, TVhigh, TVlow, TVchg, TVchg_percent;
     private Button BTNbuy, BTNsell;
@@ -26,6 +40,10 @@ public class StockDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stock_detail);
 
         int position = getIntent().getIntExtra("position", -1);
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
+
 
         TVsymbol = findViewById(R.id.symbol);
         TVprice = findViewById(R.id.price);
@@ -43,6 +61,8 @@ public class StockDetailActivity extends AppCompatActivity {
 
         final StockFirebaseColumns currentListItem = stockmodelListfilterd.get(position);
 
+        mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
+
         TVsymbol.setText(currentListItem.getSymbol());
         TVprice.setText(Double.toString(currentListItem.getPrice()));
         TVhigh.setText(Double.toString(currentListItem.getHigh()));
@@ -55,7 +75,7 @@ public class StockDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Transactions transactions = new Transactions();
 
-                transactions.buy(currentListItem.getPrice(), currentListItem.getSymbol(), 1, StockDetailActivity.this, getApplicationContext());
+                transactions.buy(currentListItem.getPrice(), currentListItem.getSymbol(), 1, currentOwned, StockDetailActivity.this, getApplicationContext());
             }
         });
 
@@ -64,7 +84,64 @@ public class StockDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Transactions transactions = new Transactions();
 
-                transactions.sell(currentListItem.getPrice(), currentListItem.getSymbol(), 1, StockDetailActivity.this, getApplicationContext());
+                transactions.sell(currentListItem.getPrice(), currentListItem.getSymbol(), 1, currentOwned,StockDetailActivity.this, getApplicationContext());
+            }
+        });
+
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentUser.setFunds(snapshot.child("funds").getValue(Double.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mDatabaseReference2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
+
+                if(currentOwnednow.getSymbol().equals(currentListItem.getSymbol())){
+                    currentOwned = currentOwnednow;
+                }
+
+                if(currentOwned == null){
+                    Log.e(LOG_TAG, "currentOwned is null");
+                    currentOwned = new StocksOwn(currentListItem.getPrice(), "", 0, currentListItem.getSymbol());
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
+
+                if(currentOwnednow.getSymbol().equals(currentListItem.getSymbol())){
+                    currentOwned = currentOwnednow;
+                }
+
+                if(currentOwned == null){
+                    Log.e(LOG_TAG, "currentOwned is null");
+                    currentOwned = new StocksOwn(currentListItem.getPrice(), "", 0, currentListItem.getSymbol());
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 

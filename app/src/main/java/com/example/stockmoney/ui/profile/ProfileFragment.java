@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import com.example.stockmoney.MainActivity;
 import com.example.stockmoney.R;
 
+import static com.example.stockmoney.data.DataItems.currentUser;
+
 public class ProfileFragment extends Fragment {
 
     EditText ETuserName;
@@ -35,10 +37,10 @@ public class ProfileFragment extends Fragment {
         funds_field = view.findViewById(R.id.funds_field);
         rank_field = view.findViewById(R.id.rank_field);
 
-        ETuserName.setText(MainActivity.currentUser.getUsername());
-        ETemail.setText(MainActivity.currentUser.getEmail());
-        email_field.setText(MainActivity.currentUser.getEmail());
-        userName_field.setText(MainActivity.currentUser.getUsername());
+        ETuserName.setText(currentUser.getUsername());
+        ETemail.setText(currentUser.getEmail());
+        email_field.setText(currentUser.getEmail());
+        userName_field.setText(currentUser.getUsername());
 //        funds_field.setText(MainActivity.funds);
 //        rank_field.setText(MainActivity.rank);
 

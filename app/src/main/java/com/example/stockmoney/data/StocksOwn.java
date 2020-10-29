@@ -6,6 +6,8 @@ public class StocksOwn {
     int quantity;
     String symbol;
 
+    public StocksOwn(){}
+
     public StocksOwn(double avgPrice, String name, int quantity, String symbol){
         this.avgPrice = avgPrice;
         this.name = name;

@@ -33,6 +33,8 @@ import java.util.Arrays;
 import com.google.firebase.database.ValueEventListener;
 import com.example.stockmoney.data.UserDetails;
 
+import static com.example.stockmoney.data.DataItems.currentUser;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG =MainActivity.class.getSimpleName();
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     //Information of users which are used everywhere in the app
-    public static UserDetails currentUser = new UserDetails();
     public static String uid;
 
     //variablesof firebase database
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("MainActivity/ ","Uid already in database");
                         }
                         else {
-                            currentUser.setFunds(1000000.00);
+                            currentUser.setFunds(1000000);
                             currentUser.setRank(-1);
                             UserDetails userDetails = currentUser;
                             mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uid);
