@@ -26,7 +26,6 @@ public class mystockadapter  extends ArrayAdapter<stockmodel> {
     public mystockadapter(Activity context, List<stockmodel> stockmodelList) {
         super(context, R.layout.list_custom_item,stockmodelList);
 
-
         this.context = context;
         this.stockmodelList = stockmodelList;
         this.stockmodelListfilterd = stockmodelList;
@@ -36,12 +35,19 @@ public class mystockadapter  extends ArrayAdapter<stockmodel> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_custom_item,null,true);
+        View view = convertView;
 
-        TextView stocksymbol = view.findViewById(R.id.stocksymbol);
-        stocksymbol.setText(stockmodelListfilterd.get(position).getSymbol());
+        if(view == null) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listitem_home, parent, false);
+        }
 
+        TextView TVprice = view.findViewById(R.id.TVprice);
+        TextView TVname = view.findViewById(R.id.TVname);
+        TextView TVchg =  view.findViewById(R.id.TVchg);
 
+        TVprice.setText(stockmodelListfilterd.get(position).getPrice());
+        TVname.setText(stockmodelListfilterd.get(position).getSymbol());
+        TVchg.setText(stockmodelListfilterd.get(position).getChg());
 
         return view;
     }
