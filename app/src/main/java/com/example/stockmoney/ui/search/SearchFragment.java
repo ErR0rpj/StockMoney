@@ -1,7 +1,6 @@
 package com.example.stockmoney.ui.search;
 
 import android.content.Intent;
-import android.icu.text.StringSearch;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,14 +12,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,55 +23,46 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.stockmoney.MainActivity;
 import com.example.stockmoney.R;
 import com.example.stockmoney.StockDetailActivity;
+import com.example.stockmoney.data.StockFirebaseColumns;
 import com.example.stockmoney.mystockadapter;
-import com.example.stockmoney.stockmodel;
+import static com.example.stockmoney.data.DataItems.stockmodelList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class SearchFragment extends Fragment {
 
     EditText editsearchs;
     ListView listViewstocks;
 
-
-    public static List<stockmodel> stockmodelList = new ArrayList<>();
-    stockmodel stockmodel;
+//    public static List<StockFirebaseColumns> stockmodelList = new ArrayList<>();
     mystockadapter mystockadapter;
-
-    private SearchViewModel searchViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_search, container, false);
 
-       // return root;
-
-
         editsearchs =  root.findViewById(R.id.editsearchs);
         listViewstocks = root.findViewById(R.id.listviewstocks);
 
-        fetchData();
+        if(stockmodelList == null || stockmodelList.size() == 0) {
+            fetchData();
+        }
 
+        mystockadapter = new mystockadapter(getActivity(), stockmodelList);
         listViewstocks.setAdapter(mystockadapter);
 
-
-         listViewstocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewstocks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              @Override
              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     startActivity(new Intent(getContext(), StockDetailActivity.class).putExtra("position",position));
              }
-         });
+        });
 
          editsearchs.addTextChangedListener(new TextWatcher() {
              @Override
@@ -139,26 +125,24 @@ public class SearchFragment extends Fragment {
                     {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        String price = jsonObject.getString("price");
-                        String high = jsonObject.getString("high");
-                        String low = jsonObject.getString("low");
+                        Double price = Double.parseDouble(jsonObject.getString("price"));
+                        Double high = Double.parseDouble(jsonObject.getString("high"));
+                        Double low = Double.parseDouble(jsonObject.getString("low"));
                         String chg = jsonObject.getString("chg");
                         String chg_percent = jsonObject.getString("chg_percent");
                         String dateTime = jsonObject.getString("dateTime");
                         String symbol = jsonObject.getString("symbol");
-                        String id = jsonObject.getString("id");
+                        int id = Integer.parseInt(jsonObject.getString("id"));
 
 
-                        stockmodel = new stockmodel(price,high,low,chg,chg_percent,dateTime,symbol,id);
+                        StockFirebaseColumns stockmodel = new StockFirebaseColumns(chg,chg_percent,high,id,low,symbol,price,symbol);
                         stockmodelList.add(stockmodel);
-                        Log.e("SearchFragment: price ", price);
+                        Log.e("SearchFragment: price ", price.toString());
 
                     }
 
                     mystockadapter = new mystockadapter(getActivity(), stockmodelList);
                     listViewstocks.setAdapter(mystockadapter);
-
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

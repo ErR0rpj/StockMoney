@@ -9,7 +9,7 @@ public class StockFirebaseColumns {
     private double low;
     private String chg;
     private String chg_percent;
-    //private String dateTime;
+    private String dateTime;
     private String symbol;
     private int id;
     private String name;

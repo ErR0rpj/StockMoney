@@ -2,6 +2,8 @@ package com.example.stockmoney;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +14,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.stockmoney.data.StockFirebaseColumns;
 import com.example.stockmoney.ui.search.SearchFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class mystockadapter  extends ArrayAdapter<stockmodel> {
+public class mystockadapter  extends ArrayAdapter<StockFirebaseColumns> {
+
+    private static final String LOG_TAG = mystockadapter.class.getSimpleName();
 
     private Context context;
-    private List<stockmodel> stockmodelList;
-    private List<stockmodel> stockmodelListfilterd;
+    private List<StockFirebaseColumns> stockmodelList;
+    private List<StockFirebaseColumns> stockmodelListfilterd;
 
-    public mystockadapter(Activity context, List<stockmodel> stockmodelList) {
+    public mystockadapter(Activity context, List<StockFirebaseColumns> stockmodelList) {
         super(context, R.layout.list_custom_item,stockmodelList);
 
         this.context = context;
@@ -45,9 +50,24 @@ public class mystockadapter  extends ArrayAdapter<stockmodel> {
         TextView TVname = view.findViewById(R.id.TVname);
         TextView TVchg =  view.findViewById(R.id.TVchg);
 
-        TVprice.setText(stockmodelListfilterd.get(position).getPrice());
+        if(stockmodelListfilterd == null){
+            Log.e(LOG_TAG, "currentListItem is null");
+            return view;
+        }
+
+        StockFirebaseColumns currentListItem = stockmodelListfilterd.get(position);
+
+        TVprice.setText(Double.toString(currentListItem.getPrice()));
         TVname.setText(stockmodelListfilterd.get(position).getSymbol());
-        TVchg.setText(stockmodelListfilterd.get(position).getChg());
+
+        String chg = currentListItem.getChg();
+        if(chg.charAt(0)=='-'){
+            TVchg.setTextColor(Color.RED);
+        }
+        else{
+            TVchg.setTextColor(Color.GREEN);
+        }
+        TVchg.setText(currentListItem.getChg());
 
         return view;
     }
@@ -60,7 +80,7 @@ public class mystockadapter  extends ArrayAdapter<stockmodel> {
 
     @Nullable
     @Override
-    public stockmodel getItem(int position) {
+    public StockFirebaseColumns getItem(int position) {
         return stockmodelListfilterd.get(position);
     }
 
@@ -83,10 +103,10 @@ public class mystockadapter  extends ArrayAdapter<stockmodel> {
                      filterResults.values = stockmodelList;
                  }else
                  {
-                     List<stockmodel> resultsmodel = new ArrayList<>();
+                     List<StockFirebaseColumns> resultsmodel = new ArrayList<>();
                      String searchStr = constraint.toString().toLowerCase();
 
-                     for(stockmodel itemsModel:stockmodelList)
+                     for(StockFirebaseColumns itemsModel:stockmodelList)
                      {
                          if(itemsModel.getSymbol().toLowerCase().contains(searchStr)){
                              resultsmodel.add(itemsModel);
@@ -101,8 +121,8 @@ public class mystockadapter  extends ArrayAdapter<stockmodel> {
             @Override
             protected void publishResults(CharSequence constraints, FilterResults results)
             {
-                stockmodelListfilterd = (List<stockmodel>) results.values;
-                SearchFragment.stockmodelList = (List<stockmodel>) results.values;
+                stockmodelListfilterd = (List<StockFirebaseColumns>) results.values;
+                com.example.stockmoney.data.DataItems.stockmodelList = (List<StockFirebaseColumns>) results.values;
                 notifyDataSetChanged();
             }
         };
