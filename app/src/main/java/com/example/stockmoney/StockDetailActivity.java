@@ -3,9 +3,13 @@ package com.example.stockmoney;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.stockmoney.data.StockFirebaseColumns;
+import com.example.stockmoney.services.Transactions;
 
 import static com.example.stockmoney.data.DataItems.stockmodelListfilterd;
 
@@ -14,6 +18,7 @@ public class StockDetailActivity extends AppCompatActivity {
     private static final String LOG_TAG = StockDetailActivity.class.getSimpleName();
 
     private TextView TVsymbol, TVprice, TVhigh, TVlow, TVchg, TVchg_percent;
+    private Button BTNbuy, BTNsell;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +33,15 @@ public class StockDetailActivity extends AppCompatActivity {
         TVlow = findViewById(R.id.low);
         TVchg = findViewById(R.id.chg);
         TVchg_percent = findViewById(R.id.chg_percent);
+        BTNbuy = findViewById(R.id.BTNbuy);
+        BTNsell = findViewById(R.id.BTNsell);
 
         if(position == -1){
+            Log.e(LOG_TAG, "position is -1, check immediately");
             return;
         }
 
-        StockFirebaseColumns currentListItem = stockmodelListfilterd.get(position);
+        final StockFirebaseColumns currentListItem = stockmodelListfilterd.get(position);
 
         TVsymbol.setText(currentListItem.getSymbol());
         TVprice.setText(Double.toString(currentListItem.getPrice()));
@@ -41,6 +49,24 @@ public class StockDetailActivity extends AppCompatActivity {
         TVlow.setText(Double.toString(currentListItem.getLow()));
         TVchg_percent.setText(currentListItem.getChg_percent());
         TVchg.setText(currentListItem.getChg());
+
+        BTNbuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Transactions transactions = new Transactions();
+
+                transactions.buy(currentListItem.getPrice(), currentListItem.getSymbol(), 1, StockDetailActivity.this, getApplicationContext());
+            }
+        });
+
+        BTNsell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Transactions transactions = new Transactions();
+
+                transactions.sell(currentListItem.getPrice(), currentListItem.getSymbol(), 1, StockDetailActivity.this, getApplicationContext());
+            }
+        });
 
     }
 }

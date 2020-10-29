@@ -7,18 +7,24 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.stockmoney.MainActivity;
 import com.example.stockmoney.data.StocksOwn;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Transactions {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    private StocksOwn currentOwned;
 
     //TODO: Fetch latest data from firebase for the current stock and pass here.
-    public void buy(double currentPrice, String symbol, int quantity, Activity activity, Context context){
+    public void buy(final double currentPrice, final String symbol, int quantity, Activity activity, Context context){
         if(quantity < 1) {
             Toast.makeText(activity, "Quantity cannot be 0", Toast.LENGTH_SHORT).show();
             return;
@@ -29,8 +35,6 @@ public class Transactions {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-
-        Log.e("Transactions: ", "Internet Connection = " + isConnected);
 
         if(!isConnected) {
             Toast.makeText(activity, "No Internet Connection! Unable to Buy.", Toast.LENGTH_SHORT).show();
@@ -43,13 +47,33 @@ public class Transactions {
         funds = funds - (currentPrice*quantity);
         if(funds < 0){
             Toast.makeText(activity, "Not enough funds to buy.", Toast.LENGTH_SHORT).show();
+            return;
         }
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(MainActivity.currentUser.getUid());
+        currentOwned = new StocksOwn(currentPrice, "", quantity, symbol);
 
-        //Change below lines to fetch data from firebase.
-        StocksOwn currentOwned = new StocksOwn(currentPrice, "", quantity, symbol);
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild("stocksOwn/"+symbol)){
+//                    mDatabaseReference = mDatabaseReference.child("stockOwn").child(symbol);
+                    currentOwned = (StocksOwn) snapshot.child("stockOwn").child(symbol).getValue();
+                    Log.e("Transaction: ", currentOwned.getSymbol());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //TODO: Change below lines to fetch data from firebase.
+        currentOwned = new StocksOwn(currentPrice, "", quantity, symbol);
 
         //TODO: Take this code out in a new class.
-        mFirebaseDatabase =FirebaseDatabase.getInstance();
+
         mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(MainActivity.currentUser.getUid()).child("stocksOwn").child(symbol);
         mDatabaseReference.setValue(currentOwned);
 
@@ -74,8 +98,6 @@ public class Transactions {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-        Log.e("Transactions: ", "Internet Connection = " + isConnected);
-
         if(!isConnected) {
             Toast.makeText(activity, "No Internet Connection! Unable to Sell.", Toast.LENGTH_SHORT).show();
             return;
@@ -99,6 +121,6 @@ public class Transactions {
         mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(MainActivity.currentUser.getUid());
         mDatabaseReference.child("funds").setValue(funds);
 
-        Toast.makeText(activity, "Bought Successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Sold Successfully", Toast.LENGTH_SHORT).show();
     }
 }

@@ -119,8 +119,6 @@ public class SearchFragment extends Fragment {
 
                     JSONArray jsonArray = jsonObject1.getJSONArray("response");
 
-                    Log.e("SearchFragment: json: ", jsonArray.toString());
-
                     for(int i=0;i<jsonArray.length();i++)
                     {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -137,7 +135,6 @@ public class SearchFragment extends Fragment {
 
                         StockFirebaseColumns stockmodel = new StockFirebaseColumns(chg,chg_percent,high,id,low,symbol,price,symbol);
                         stockmodelList.add(stockmodel);
-                        Log.e("SearchFragment: price ", price.toString());
 
                     }
 
@@ -146,6 +143,7 @@ public class SearchFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(), "Please Check your internet connection!", Toast.LENGTH_SHORT).show();
                     Log.e("StockFragment: json", "response nhi mila");
                 }
 
@@ -160,8 +158,6 @@ public class SearchFragment extends Fragment {
                 Log.e("StockFragment: respo", "response nhi mila");
             }
         });
-
-        Log.e("SearchFragment: last: ", request.toString());
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(request);

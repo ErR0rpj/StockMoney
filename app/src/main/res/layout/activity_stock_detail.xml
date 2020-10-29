@@ -245,14 +245,14 @@
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true">
         <Button
-            android:id="@+id/Buy"
+            android:id="@+id/BTNbuy"
             android:layout_width="10dp"
             android:layout_height="100dp"
             android:layout_weight="1"
             android:text="BUY" >
         </Button>
         <Button
-            android:id="@+id/Sell"
+            android:id="@+id/BTNsell"
             android:layout_width="10dp"
             android:layout_height="100dp"
             android:layout_weight="1"

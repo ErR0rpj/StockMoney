@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     //Information of users which are used everywhere in the app
     public static UserDetails currentUser = new UserDetails();
+    public static String uid;
 
     //variablesof firebase database
     public static FirebaseDatabase mFirebaseDatabase;
@@ -88,8 +89,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if(user != null){
                     currentUser.setEmail(user.getEmail());
+                    uid = user.getUid();
                     currentUser.setUid(user.getUid());
                     Log.e("MainActivity: ", currentUser.getUid());
+                    //mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
+
                     onSignedInInitialize(user.getDisplayName());
                 }
                 else {
@@ -139,10 +143,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.e(LOG_TAG, "onActivityResult");
+
         if(requestCode == RC_SIGN_IN) {
             if(resultCode == RESULT_OK) {
 
                 mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -153,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                             currentUser.setFunds(1000000.00);
                             currentUser.setRank(-1);
                             UserDetails userDetails = currentUser;
-                            mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
+                            mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(uid);
                             mDatabaseReference.setValue(userDetails);
                             Log.e("MainActivity/ ", "User added in database.");
                         }
@@ -162,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Log.e(LOG_TAG, "Cancelled sign in");
                     }
                 });
 
