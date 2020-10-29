@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.stockmoney.data.StockFirebaseColumns;
 import com.example.stockmoney.data.StocksOwn;
@@ -33,6 +35,7 @@ public class StockDetailActivity extends AppCompatActivity {
 
     private TextView TVsymbol, TVprice, TVhigh, TVlow, TVchg, TVchg_percent;
     private Button BTNbuy, BTNsell;
+    private EditText ETquantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class StockDetailActivity extends AppCompatActivity {
         TVchg_percent = findViewById(R.id.chg_percent);
         BTNbuy = findViewById(R.id.BTNbuy);
         BTNsell = findViewById(R.id.BTNsell);
+        ETquantity = findViewById(R.id.ETquantity);
 
         if(position == -1){
             Log.e(LOG_TAG, "position is -1, check immediately");
@@ -75,8 +79,13 @@ public class StockDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Transactions transactions = new Transactions();
 
-                transactions.buy(currentListItem.getPrice(), currentListItem.getSymbol(), 1, currentOwned, StockDetailActivity.this, getApplicationContext());
-            }
+                if(ETquantity.getText() != null && ETquantity.getText().toString().length() > 0) {
+                    int quantity = Integer.parseInt(ETquantity.getText().toString());
+                    transactions.buy(currentListItem.getPrice(), currentListItem.getSymbol(), quantity, currentOwned, StockDetailActivity.this, getApplicationContext());
+                }
+                else{
+                    Toast.makeText(StockDetailActivity.this, "Enter quantity!", Toast.LENGTH_SHORT).show();
+                }}
         });
 
         BTNsell.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +93,13 @@ public class StockDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Transactions transactions = new Transactions();
 
-                transactions.sell(currentListItem.getPrice(), currentListItem.getSymbol(), 1, currentOwned,StockDetailActivity.this, getApplicationContext());
+                if(ETquantity.getText() != null && ETquantity.getText().toString().length() > 0) {
+                    int quantity = Integer.parseInt(ETquantity.getText().toString());
+                    transactions.sell(currentListItem.getPrice(), currentListItem.getSymbol(), quantity, currentOwned, StockDetailActivity.this, getApplicationContext());
+                }
+                else{
+                    Toast.makeText(StockDetailActivity.this, "Enter quantity!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
