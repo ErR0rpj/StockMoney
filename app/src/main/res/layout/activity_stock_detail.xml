@@ -261,16 +261,9 @@
         android:layout_marginRight="20dp"
         android:background="@color/color_two" />
 
-    <TextView
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:text="GRAPHS COMING SOON....."
-        android:textStyle="bold"
-        android:textSize="20dp" />
 
+
+    
 
 
     <EditText

@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,8 +13,8 @@
 
         <RelativeLayout
             android:id="@+id/rellay1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/grad"
             android:paddingBottom="20dp">
 
@@ -31,8 +33,7 @@
                     android:adjustViewBounds="true"
                     android:background="@drawable/circle"
                     android:padding="3dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_user" />
+                    android:scaleType="centerInside" />
 
             </RelativeLayout>
 
@@ -44,10 +45,13 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="70dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="Fetching Name..."
                 android:textColor="@color/white"
-                android:textSize="32sp" />
+                android:textStyle="bold"
+              android:textSize="32sp" />
 
             <ImageView
                 android:layout_width="40dp"
@@ -73,7 +77,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/followersBg"
+                android:background="@color/recovered"
                 android:gravity="center"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp">
@@ -90,6 +94,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="MONEY"
+                        android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
 
@@ -99,6 +104,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="Retrieving..."
+                        android:textStyle="bold"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -112,7 +118,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/followingBg"
+                android:background="@color/active"
                 android:gravity="center"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp">
@@ -133,6 +139,7 @@
                         android:fontFamily="sans-serif-light"
                         android:linksClickable="true"
                         android:text="PROFIT/LOSS"
+                        android:textStyle="bold"
                         android:onClick="launchClick"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
@@ -143,6 +150,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="Retrieving..."
+                        android:textStyle="bold"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
@@ -189,6 +197,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="Fetching username..."
+                        android:textStyle="bold"
                         android:textColor="#000000"
                         android:textSize="24sp" />
 
@@ -219,6 +228,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="Fetching Email...."
+                        android:textStyle="bold"
                         android:textColor="#000000"
                         android:textSize="24sp" />
 
@@ -244,4 +254,7 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+
+
 </ScrollView>
