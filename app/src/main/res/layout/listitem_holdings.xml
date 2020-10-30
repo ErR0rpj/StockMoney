@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/TVavgPrice"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:text="1459.00" />
+
+    <TextView
+        android:id="@+id/TVsymbol_holdings"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="3"
+        android:text="Reliance Industries"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/TVprofit"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:text="+49.85" />
+
+        <TextView
+            android:id="@+id/TVquantity_holdings"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="2"
+            android:text="Quantity: 5" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
