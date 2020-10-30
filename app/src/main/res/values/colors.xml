@@ -17,7 +17,8 @@
     <color name="deaths">#EF5350</color>
     <color name="active">#29B6F6</color>
 
-
+    <color name="buycolor">#3E9805</color>
+    <color name="sellcolor">#9F050B</color>
 
     <color name="address">#2F7092</color>
     <color name="followers">#0D5D98</color>

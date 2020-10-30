@@ -120,7 +120,7 @@
             android:fontFamily="sans-serif-light"
             android:text="0"
             android:textAlignment="textEnd"
-            android:textColor="@color/buy"
+            android:textColor="@color/buycolor"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -157,7 +157,7 @@
             android:fontFamily="sans-serif-light"
             android:text="0"
             android:textAlignment="textEnd"
-            android:textColor="@color/sell"
+            android:textColor="@color/sellcolor"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -329,7 +329,7 @@
             android:layout_width="30dp"
             android:layout_height="115dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/buy"
+            android:backgroundTint="@color/buycolor"
             android:text="BUY"
             android:textSize="35dp"
             android:textStyle="bold">
@@ -340,7 +340,7 @@
             android:id="@+id/BTNsell"
             android:layout_width="30dp"
             android:layout_height="115dp"
-            android:backgroundTint="@color/sell"
+            android:backgroundTint="@color/sellcolor"
             android:layout_weight="1"
             android:text="SELL"
             android:textSize="35dp"
