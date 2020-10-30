@@ -244,21 +244,22 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true">
-        <Button
-            android:id="@+id/BTNbuy"
-            android:layout_width="10dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:text="BUY" >
-        </Button>
-        <Button
-            android:id="@+id/BTNsell"
-            android:layout_width="10dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:text="SELL" >
-        </Button>
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/BTNbuy"
+        android:layout_width="176dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"
+        android:text="BUY"></Button>
+
+    <Button
+        android:id="@+id/BTNsell"
+        android:layout_width="248dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:text="SELL"></Button>
 
 
 </LinearLayout>
