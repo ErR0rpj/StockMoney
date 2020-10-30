@@ -277,26 +277,7 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_content"
-                android:layout_height="match_content"
-                android:layout_weight="1"
-                android:text="Night Mode"
-                android:nackgroundTint = ""
-                android:textSize = "22sp"
-                android:textColor = "#ffffff"
-                android:onClick = "btnNightMode" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_content"
-                android:layout_height="match_content"
-                android:layout_weight="1"
-                android:text="Light Mode"
-                android:textSize = "22sp"
-                android:textColor = "#ffffff"
-                android:onClick = "btnlightMode" />
+           
 
 
 
