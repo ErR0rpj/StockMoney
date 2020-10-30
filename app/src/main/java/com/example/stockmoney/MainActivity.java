@@ -72,16 +72,6 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase =FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users");
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations. ye maine nhi likha h @ojha
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_watchlist, R.id.navigation_portfolio, R.id.navigation_search, R.id.navigation_profile)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
-
         //FirebaseUi and authentication...code starting
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -113,6 +103,19 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         //FirebaseUI and authentication...code end
+
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations. ye maine nhi likha h @ojha
+        navView.setSelectedItemId(R.id.navigation_search);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_watchlist, R.id.navigation_portfolio, R.id.navigation_search, R.id.navigation_profile)
+                .build();
+        navView.setSelectedItemId(R.id.navigation_search);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
+        navView.setSelectedItemId(R.id.navigation_search);
 
     }
 

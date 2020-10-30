@@ -8,21 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import static com.example.stockmoney.data.DataItems.currentPriceMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.stockmoney.data.StockFirebaseColumns;
+import com.example.stockmoney.data.StocksOwn;
 
 import java.util.ArrayList;
 
 
 //Adapter for home page list.
-public class HomeAdapterClass extends ArrayAdapter<StockFirebaseColumns> {
+public class HomeAdapterClass extends ArrayAdapter<StocksOwn> {
 
     private final String LOG_TAG = HomeAdapterClass.class.getSimpleName();
 
-    public HomeAdapterClass(Activity context, ArrayList<StockFirebaseColumns> list){
+    public HomeAdapterClass(Activity context, ArrayList<StocksOwn> list){
         super(context, 0, list);
     }
 
@@ -40,24 +41,30 @@ public class HomeAdapterClass extends ArrayAdapter<StockFirebaseColumns> {
         TextView TVname = LISThome.findViewById(R.id.TVname);
         TextView TVchg =  LISThome.findViewById(R.id.TVchg);
 
-        StockFirebaseColumns currentListItem = getItem(position);
+        StocksOwn currentListItem = getItem(position);
 
         if(currentListItem == null){
             Log.e(LOG_TAG, "currentListItem is null");
             return LISThome;
         }
 
-        TVprice.setText(Double.toString(currentListItem.getPrice()));
-        TVname.setText(currentListItem.getName());
+        if(currentPriceMap.containsKey(currentListItem.getSymbol())){
+            TVprice.setText(String.format("%.2f", currentPriceMap.get(currentListItem.getSymbol())));
+        }
+        else{
+            TVprice.setText(Double.toString(currentListItem.getAvgPrice()));
+        }
 
-        String chg = currentListItem.getChg();
-        if(chg.charAt(0)=='-'){
+        TVname.setText(currentListItem.getSymbol());
+
+        double profit = currentListItem.getProfit();
+        if(profit < 0){
             TVchg.setTextColor(Color.RED);
         }
         else{
             TVchg.setTextColor(Color.GREEN);
         }
-        TVchg.setText(currentListItem.getChg());
+        TVchg.setText(String.format("₹ %.2f", profit));
 
         return LISThome;
     }

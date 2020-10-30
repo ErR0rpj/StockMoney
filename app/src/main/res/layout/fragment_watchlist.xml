@@ -16,14 +16,6 @@
         android:paddingBottom="16dp">
     </ListView>
 
-    <TextView
-        android:id="@+id/TVempty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal|center_vertical"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp" />
-
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
