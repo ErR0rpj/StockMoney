@@ -27,7 +27,7 @@ public class Transactions {
     private double avgPrice;
 
     //TODO: Fetch latest data from firebase for the current stock and pass here.
-    public void buy(final double currentPrice, final String symbol, int quantity, final StocksOwn currentOwned, Activity activity, Context context){
+    public void buy(final double currentPrice, final String symbol, int quantity, StocksOwn currentOwned, Activity activity, Context context){
         if(quantity < 1) {
             Toast.makeText(activity, "Quantity cannot be 0", Toast.LENGTH_SHORT).show();
             return;
@@ -54,15 +54,18 @@ public class Transactions {
             Toast.makeText(activity, "Not enough funds to buy.", Toast.LENGTH_SHORT).show();
             return;
         }
+        double totalPrice;
 
-        double totalPrice = (currentOwned.getAvgPrice() * currentOwned.getQuantity()) + (currentPrice * quantity);
+        if(currentOwned == null){
+            currentOwned = new StocksOwn(0, "", 0, symbol);
+        }
+
+        totalPrice = (currentOwned.getAvgPrice() * currentOwned.getQuantity()) + (currentPrice * quantity);
         quantity = quantity + currentOwned.getQuantity();
         avgPrice = totalPrice/quantity;
 
         currentOwned.setAvgPrice(avgPrice);
         currentOwned.setQuantity(quantity);
-
-        Log.e("transaction: bought: ", Integer.toString(quantity));
 
         mDatabaseReference.child("stocksOwn").child(symbol).setValue(currentOwned);
 
@@ -74,7 +77,7 @@ public class Transactions {
 
 
     //TODO: Fetch latest data from firebase for the current stock and pass here.
-    public void sell(final double currentPrice, final String symbol, int quantity, final StocksOwn currentOwned, Activity activity, Context context){
+    public void sell(final double currentPrice, final String symbol, int quantity, StocksOwn currentOwned, Activity activity, Context context){
         if(quantity < 1) {
             Toast.makeText(activity, "Quantity cannot be 0", Toast.LENGTH_SHORT).show();
             return;
@@ -94,7 +97,10 @@ public class Transactions {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
 
-        Log.e("transaction sell:" , Integer.toString(currentOwned.getQuantity()));
+        if(currentOwned == null){
+            currentOwned = new StocksOwn(0, "", 0, symbol);
+        }
+
         if(currentOwned.getQuantity() < quantity){
             Toast.makeText(activity, "You do not have enough quantity to sell this stock", Toast.LENGTH_SHORT).show();
             return;
