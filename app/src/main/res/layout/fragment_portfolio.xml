@@ -17,13 +17,12 @@
 
 
     <androidx.cardview.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_marginTop="10dp"
         android:id="@+id/card_view"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        card_view:cardCornerRadius="4dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="4dp">
 
         <TextView
             android:id="@+id/info_text"
@@ -34,19 +33,17 @@
             android:id="@+id/LISTholdings"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="10dp"
             android:paddingLeft="10dp"
+            android:paddingTop="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="5dp"/>
+            android:paddingBottom="5dp" />
 
     </androidx.cardview.widget.CardView>
 
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
@@ -64,12 +61,12 @@
             android:id="@+id/TVnetWorth"
             android:layout_width="match_parent"
             android:layout_height="32dp"
-            android:textSize="20sp"
             android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

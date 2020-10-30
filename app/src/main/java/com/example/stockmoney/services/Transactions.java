@@ -48,7 +48,6 @@ public class Transactions {
         mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
 
         double funds = currentUser.getFunds();
-        Log.e("Transactions:startfund ", Double.toString(funds));
         funds = funds - (currentPrice * quantity);
         if(funds < 0){
             Toast.makeText(activity, "Not enough funds to buy.", Toast.LENGTH_SHORT).show();
