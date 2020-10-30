@@ -2,6 +2,7 @@ package com.example.stockmoney.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +30,7 @@ public class ProfileFragment extends Fragment {
 
     TextView btn_start;
 
-
     private final String LOG_TAG = ProfileFragment.class.getSimpleName();
-
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,17 +46,18 @@ public class ProfileFragment extends Fragment {
         ETuserName.setText(currentUser.getUsername());
         ETemail.setText(currentUser.getEmail());
         userName_field.setText(currentUser.getUsername());
-        funds_field.setText(Double.toString(currentUser.getFunds()));
+        funds_field.setText(String.format("₹ %.2f", currentUser.getFunds()));
         rank_field = view.findViewById(R.id.rank_field);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                currentUser.setFunds(snapshot.child("funds").getValue(Double.class));
-                funds_field.setText(Double.toString(currentUser.getFunds()));
+                double funds = snapshot.child("funds").getValue(Double.class);
+                currentUser.setFunds(funds);
+                funds_field.setText(String.format("₹ %.2f", funds));
                 currentUser.setRank(snapshot.child("rank").getValue(Integer.class));
                 rank_field.setText(Integer.toString(currentUser.getRank()));
             }

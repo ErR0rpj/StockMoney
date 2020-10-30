@@ -29,12 +29,8 @@ public class StockDetailActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = StockDetailActivity.class.getSimpleName();
 
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference, mDatabaseReference2;
     private StocksOwn currentOwned;
 
-    private TextView TVsymbol, TVprice, TVhigh, TVlow, TVchg, TVchg_percent,TVtotal_amount;
-    private Button BTNbuy, BTNsell;
     private EditText ETquantity;
 
     @Override
@@ -44,19 +40,19 @@ public class StockDetailActivity extends AppCompatActivity {
 
         int position = getIntent().getIntExtra("position", -1);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
 
-        TVsymbol = findViewById(R.id.symbol);
-        TVprice = findViewById(R.id.price);
-        TVhigh = findViewById(R.id.high);
-        TVlow = findViewById(R.id.low);
-        TVchg = findViewById(R.id.chg);
-        TVchg_percent = findViewById(R.id.chg_percent);
-        BTNbuy = findViewById(R.id.BTNbuy);
-        BTNsell = findViewById(R.id.BTNsell);
+        TextView TVsymbol = findViewById(R.id.symbol);
+        TextView TVprice = findViewById(R.id.price);
+        TextView TVhigh = findViewById(R.id.high);
+        TextView TVlow = findViewById(R.id.low);
+        TextView TVchg = findViewById(R.id.chg);
+        TextView TVchg_percent = findViewById(R.id.chg_percent);
+        Button BTNbuy = findViewById(R.id.BTNbuy);
+        Button BTNsell = findViewById(R.id.BTNsell);
         ETquantity = findViewById(R.id.ETquantity);
-        TVtotal_amount = findViewById(R.id.totalamount);
+        TextView TVtotal_amount = findViewById(R.id.totalamount);
 
         if(position == -1){
             Log.e(LOG_TAG, "position is -1, check immediately");
@@ -65,12 +61,12 @@ public class StockDetailActivity extends AppCompatActivity {
 
         final StockFirebaseColumns currentListItem = stockmodelListfilterd.get(position);
 
-        mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
+        DatabaseReference mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
 
         TVsymbol.setText(currentListItem.getSymbol());
-        TVprice.setText(Double.toString(currentListItem.getPrice()));
-        TVhigh.setText(Double.toString(currentListItem.getHigh()));
-        TVlow.setText(Double.toString(currentListItem.getLow()));
+        TVprice.setText(String.format("₹ %.2f", currentListItem.getPrice()));
+        TVhigh.setText(String.format("₹ %.2f", currentListItem.getHigh()));
+        TVlow.setText(String.format("₹ %.2f", currentListItem.getLow()));
         TVchg_percent.setText(currentListItem.getChg_percent());
         TVchg.setText(currentListItem.getChg());
 
