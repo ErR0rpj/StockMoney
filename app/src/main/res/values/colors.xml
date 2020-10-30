@@ -15,11 +15,10 @@
     <color name="deaths">#EF5350</color>
     <color name="active">#29B6F6</color>
 
-<<<<<<< HEAD
-    <color name="buy">#09B311</color>
+
+    <color name="buy">#EE04BD0C</color>
     <color name="sell">#EA0B0B</color>
-=======
->>>>>>> 3654cfb06a31ac04a91d3435699dead0072a44f0
+
     <color name="address">#2F7092</color>
     <color name="followers">#0D5D98</color>
     <color name="headings">#3797CF</color>
