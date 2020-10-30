@@ -14,8 +14,12 @@
     <color name="recovered">#66BB6A</color>
     <color name="deaths">#EF5350</color>
     <color name="active">#29B6F6</color>
+<<<<<<< HEAD
 
 
+=======
+    
+>>>>>>> 51aec8c7590d7dc9a54e420fe7609aaa2f1cf1a4
     <color name="address">#2F7092</color>
     <color name="followers">#0D5D98</color>
     <color name="headings">#3797CF</color>

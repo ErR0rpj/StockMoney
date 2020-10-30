@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,9 +11,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -20,34 +21,36 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Symbol"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/symbol"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:fontFamily="sans-serif-light"
             android:text="0"
             android:textAlignment="textEnd"
-            android:textSize="18sp"
             android:textColor="@color/color_one"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-light"
-            android:layout_alignParentRight="true"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_two"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        />
+        android:background="@color/color_two" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -55,35 +58,37 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Price"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/price"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/price"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-
-            android:textColor="@color/color_one"
-            android:textStyle="bold"
+            android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
-            android:layout_alignParentRight="true"/>
+            android:text="0"
+
+            android:textAlignment="textEnd"
+            android:textColor="@color/color_one"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_two"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        />
+        android:background="@color/color_two" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -91,35 +96,37 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="High"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/high"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/high"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-
-            android:textColor="@color/color_one"
-            android:textStyle="bold"
+            android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
-            android:layout_alignParentRight="true"/>
+            android:text="0"
+
+            android:textAlignment="textEnd"
+            android:textColor="@color/color_one"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_two"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        />
+        android:background="@color/color_two" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -127,35 +134,37 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Low"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/low"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/low"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-
-            android:textColor="@color/color_one"
-            android:textStyle="bold"
+            android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
-            android:layout_alignParentRight="true"/>
+            android:text="0"
+
+            android:textAlignment="textEnd"
+            android:textColor="@color/color_one"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_two"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        />
+        android:background="@color/color_two" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -163,35 +172,37 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Change"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/chg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/chg"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-
-            android:textColor="@color/color_one"
-            android:textStyle="bold"
+            android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
-            android:layout_alignParentRight="true"/>
+            android:text="0"
+
+            android:textAlignment="textEnd"
+            android:textColor="@color/color_one"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_two"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        />
+        android:background="@color/color_two" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -199,67 +210,75 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Change Percent"
-            android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/chg_percent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/chg_percent"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-
-            android:textColor="@color/color_one"
-            android:textStyle="bold"
+            android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
-            android:layout_alignParentRight="true"/>
+            android:text="0"
+
+            android:textAlignment="textEnd"
+            android:textColor="@color/color_one"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_two"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_two"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        />
+        android:background="@color/color_two" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_two"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        />
+        android:background="@color/color_two" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/color_two" />
 
     <LinearLayout
         android:id="@+id/LinearLayout02"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
+        <Button
+            android:id="@+id/BTNbuy"
+            android:layout_width="10dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:text="BUY"></Button>
+
+        <Button
+            android:id="@+id/BTNsell"
+            android:layout_width="10dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:text="SELL"></Button>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/BTNbuy"
-        android:layout_width="176dp"
-        android:layout_height="32dp"
-        android:layout_weight="1"
-        android:text="BUY"></Button>
-
-    <Button
-        android:id="@+id/BTNsell"
-        android:layout_width="248dp"
-        android:layout_height="30dp"
-        android:layout_weight="1"
-        android:text="SELL"></Button>
+    <EditText
+        android:id="@+id/ETquantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        android:hint="Enter quantity"
+        android:inputType="number" />
 
 
 </LinearLayout>
