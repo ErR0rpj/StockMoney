@@ -32,14 +32,14 @@ public class ProfileFragment extends Fragment {
         ETuserName = view.findViewById(R.id.ETuserName);
         ETmobile = view.findViewById(R.id.ETmobile);
         ETemail = view.findViewById(R.id.ETemail);
-        email_field = view.findViewById(R.id.email_field);
+    //    email_field = view.findViewById(R.id.email_field);
         userName_field = view.findViewById(R.id.username_field);
         funds_field = view.findViewById(R.id.funds_field);
         rank_field = view.findViewById(R.id.rank_field);
 
         ETuserName.setText(currentUser.getUsername());
         ETemail.setText(currentUser.getEmail());
-        email_field.setText(currentUser.getEmail());
+      //  email_field.setText(currentUser.getEmail());
         userName_field.setText(currentUser.getUsername());
 //        funds_field.setText(MainActivity.funds);
 //        rank_field.setText(MainActivity.rank);
