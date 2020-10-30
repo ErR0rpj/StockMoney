@@ -5,6 +5,7 @@ public class StocksOwn {
     String name;
     int quantity;
     String symbol;
+    double currentPrice;
 
     public StocksOwn(){}
 
@@ -31,6 +32,8 @@ public class StocksOwn {
         this.symbol = symbol;
     }
 
+    public void setCurrentPrice(double currentPrice) { this.currentPrice = currentPrice; }
+
     public double getAvgPrice(){
         return this.avgPrice;
     }
@@ -46,5 +49,7 @@ public class StocksOwn {
     public String getSymbol(){
         return this.symbol;
     }
+
+    public double getCurrentPrice() { return this.currentPrice; }
 
 }

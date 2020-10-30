@@ -47,7 +47,6 @@ public class StockDetailActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
 
-
         TVsymbol = findViewById(R.id.symbol);
         TVprice = findViewById(R.id.price);
         TVhigh = findViewById(R.id.high);
