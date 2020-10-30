@@ -27,7 +27,7 @@ public class ProfileFragment extends Fragment {
 
     TextView userName_field, funds_field, rank_field, ETuserName, ETemail, ETmobile;
 
-    Button btn_start;
+    TextView btn_start;
 
 
     private final String LOG_TAG = ProfileFragment.class.getSimpleName();
@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment {
         ETemail.setText(currentUser.getEmail());
         userName_field.setText(currentUser.getUsername());
         funds_field.setText(Double.toString(currentUser.getFunds()));
-        rank_field = view.findViewById(currentUser.getRank());
+        rank_field = view.findViewById(R.id.rank_field);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        btn_start = view.findViewById(R.id.rank);
+        btn_start =  view.findViewById(R.id.rank);
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
