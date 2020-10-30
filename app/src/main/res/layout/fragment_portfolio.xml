@@ -5,9 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
+
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
@@ -25,12 +31,12 @@
             android:id="@+id/TVnetWorth"
             android:layout_width="match_parent"
             android:layout_height="32dp"
-            android:textSize="20sp"
             android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

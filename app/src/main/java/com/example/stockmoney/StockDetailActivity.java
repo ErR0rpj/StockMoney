@@ -91,10 +91,10 @@ public class StockDetailActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
 
-                if(currentOwnednow.getSymbol().equals(currentListItem.getSymbol())){
+                if(currentOwnednow.getSymbol().equalsIgnoreCase(currentListItem.getSymbol())){
                     currentOwned = currentOwnednow;
                 }
-                else{
+                else if(currentOwned == null || currentOwned.getQuantity() == 0){
                     Log.e(LOG_TAG, "currentOwned is null");
                     currentOwned = new StocksOwn(0, "", 0, currentListItem.getSymbol());
                 }
@@ -109,9 +109,9 @@ public class StockDetailActivity extends AppCompatActivity {
                 if(currentOwnednow.getSymbol().equals(currentListItem.getSymbol())){
                     currentOwned = currentOwnednow;
                 }
-                else{
+                else if(currentOwned == null || currentOwned.getQuantity() == 0){
                     Log.e(LOG_TAG, "currentOwned is null");
-                    currentOwned = new StocksOwn(currentListItem.getPrice(), "", 0, currentListItem.getSymbol());
+                    currentOwned = new StocksOwn(0, "", 0, currentListItem.getSymbol());
                 }
             }
 
