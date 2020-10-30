@@ -129,8 +129,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="true"
+                        android:contextClickable="true"
                         android:fontFamily="sans-serif-light"
+                        android:linksClickable="true"
                         android:text="RANK"
+                        android:onClick="launchClick"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
 

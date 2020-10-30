@@ -27,6 +27,8 @@ import com.example.stockmoney.R;
 import com.example.stockmoney.StockDetailActivity;
 import com.example.stockmoney.data.StockFirebaseColumns;
 import com.example.stockmoney.mystockadapter;
+
+import static com.example.stockmoney.data.DataItems.currentPriceMap;
 import static com.example.stockmoney.data.DataItems.stockmodelList;
 
 import org.json.JSONArray;
@@ -133,6 +135,7 @@ public class SearchFragment extends Fragment {
                         String symbol = jsonObject.getString("symbol");
                         int id = Integer.parseInt(jsonObject.getString("id"));
 
+                        currentPriceMap.put(symbol, price);
 
                         StockFirebaseColumns stockmodel = new StockFirebaseColumns(chg,chg_percent,high,id,low,symbol,price,symbol);
                         stockmodelList.add(stockmodel);
