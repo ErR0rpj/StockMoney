@@ -15,6 +15,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.stockmoney.MainActivity;
 import com.example.stockmoney.R;
+import com.example.stockmoney.StockDetailActivity;
+import com.example.stockmoney.ui.portfolio.PortfolioFragment;
+import com.example.stockmoney.ui.watchlist.WatchlistFragment;
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +30,9 @@ import static com.example.stockmoney.data.DataItems.currentUser;
 
 public class ProfileFragment extends Fragment {
 
-    TextView userName_field, funds_field, rank_field, ETuserName, ETemail, ETmobile;
+    TextView userName_field, funds_field, rank_field, ETuserName, ETemail;
+
+    Button BTNsignout;
 
     TextView btn_start;
 
@@ -37,8 +43,8 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        BTNsignout = view.findViewById(R.id.BTNsignOut);
         ETuserName = view.findViewById(R.id.ETuserName);
-      //  ETmobile = view.findViewById(R.id.ETmobile);
         ETemail = view.findViewById(R.id.ETemail);
         userName_field = view.findViewById(R.id.username_field);
         funds_field = view.findViewById(R.id.funds_field);
@@ -51,6 +57,26 @@ public class ProfileFragment extends Fragment {
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
+
+        BTNsignout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(PortfolioFragment.mDatabaseReference2 != null && PortfolioFragment.mChildEventListener != null){
+                    PortfolioFragment.mDatabaseReference2.removeEventListener(PortfolioFragment.mChildEventListener);
+                }
+                if(WatchlistFragment.mDatabaseReference != null && WatchlistFragment.mChildEventListener != null){
+                    WatchlistFragment.mDatabaseReference.removeEventListener(WatchlistFragment.mChildEventListener);
+                }
+                if(StockDetailActivity.mDatabaseReference2 != null && StockDetailActivity.mchildEventListener != null) {
+                    StockDetailActivity.mDatabaseReference2.removeEventListener(StockDetailActivity.mchildEventListener);
+                }
+                PortfolioFragment.mChildEventListener = null;
+                WatchlistFragment.mChildEventListener = null;
+                StockDetailActivity.mchildEventListener = null;
+
+                AuthUI.getInstance().signOut(getActivity());
+            }
+        });
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override

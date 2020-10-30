@@ -301,7 +301,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/totalamount"
+            android:id="@+id/TVtotalAmount"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

@@ -33,6 +33,8 @@ public class PortfolioFragment extends Fragment {
     private static final String LOG_TAG = PortfolioFragment.class.getSimpleName();
 
     private HoldingsAdapter adapter;
+    public static DatabaseReference mDatabaseReference2;
+    public static ChildEventListener mChildEventListener;
 
     private double valuation = 0;
 
@@ -69,8 +71,8 @@ public class PortfolioFragment extends Fragment {
             }
         });
 
-        DatabaseReference mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
-        mDatabaseReference2.addChildEventListener(new ChildEventListener() {
+        mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
+        mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
@@ -115,7 +117,8 @@ public class PortfolioFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+        mDatabaseReference2.addChildEventListener(mChildEventListener);
 
         return root;
     }
