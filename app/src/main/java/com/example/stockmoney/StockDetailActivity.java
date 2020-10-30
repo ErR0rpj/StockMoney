@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +32,8 @@ public class StockDetailActivity extends AppCompatActivity {
     private static final String LOG_TAG = StockDetailActivity.class.getSimpleName();
 
     private StocksOwn currentOwned;
+    public static DatabaseReference mDatabaseReference2;
+    public static ChildEventListener mchildEventListener;
 
     private EditText ETquantity;
 
@@ -52,7 +56,7 @@ public class StockDetailActivity extends AppCompatActivity {
         Button BTNbuy = findViewById(R.id.BTNbuy);
         Button BTNsell = findViewById(R.id.BTNsell);
         ETquantity = findViewById(R.id.ETquantity);
-        TextView TVtotal_amount = findViewById(R.id.totalamount);
+        final TextView TVtotalAmount = findViewById(R.id.TVtotalAmount);
 
         if(position == -1){
             Log.e(LOG_TAG, "position is -1, check immediately");
@@ -61,7 +65,7 @@ public class StockDetailActivity extends AppCompatActivity {
 
         final StockFirebaseColumns currentListItem = stockmodelListfilterd.get(position);
 
-        DatabaseReference mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
+        mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
 
         TVsymbol.setText(currentListItem.getSymbol());
         TVprice.setText(String.format("₹ %.2f", currentListItem.getPrice()));
@@ -82,7 +86,7 @@ public class StockDetailActivity extends AppCompatActivity {
             }
         });
 
-        mDatabaseReference2.addChildEventListener(new ChildEventListener() {
+        mchildEventListener =  new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
@@ -94,8 +98,6 @@ public class StockDetailActivity extends AppCompatActivity {
                     Log.e(LOG_TAG, "currentOwned is null");
                     currentOwned = new StocksOwn(0, "", 0, currentListItem.getSymbol());
                 }
-
-
             }
 
             @Override
@@ -123,6 +125,30 @@ public class StockDetailActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        mDatabaseReference2.addChildEventListener(mchildEventListener);
+
+        ETquantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s == null || s.toString().equalsIgnoreCase("")){
+                    TVtotalAmount.setText("0");
+                }
+                else {
+                    double totalAmount = (currentListItem.getPrice()) * (Integer.parseInt(s.toString()));
+                    TVtotalAmount.setText(String.format("₹ %.2f", totalAmount));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
