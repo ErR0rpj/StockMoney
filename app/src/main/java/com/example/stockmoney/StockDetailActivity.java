@@ -74,6 +74,63 @@ public class StockDetailActivity extends AppCompatActivity {
         TVchg_percent.setText(currentListItem.getChg_percent());
         TVchg.setText(currentListItem.getChg());
 
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentUser.setFunds(snapshot.child("funds").getValue(Double.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mDatabaseReference2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
+
+                if(currentOwnednow.getSymbol().equals(currentListItem.getSymbol())){
+                    currentOwned = currentOwnednow;
+                }
+                else{
+                    Log.e(LOG_TAG, "currentOwned is null");
+                    currentOwned = new StocksOwn(0, "", 0, currentListItem.getSymbol());
+                }
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
+
+                if(currentOwnednow.getSymbol().equals(currentListItem.getSymbol())){
+                    currentOwned = currentOwnednow;
+                }
+                else{
+                    Log.e(LOG_TAG, "currentOwned is null");
+                    currentOwned = new StocksOwn(currentListItem.getPrice(), "", 0, currentListItem.getSymbol());
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         BTNbuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,63 +157,6 @@ public class StockDetailActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(StockDetailActivity.this, "Enter quantity!", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                currentUser.setFunds(snapshot.child("funds").getValue(Double.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        mDatabaseReference2.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
-
-                if(currentOwnednow.getSymbol().equals(currentListItem.getSymbol())){
-                    currentOwned = currentOwnednow;
-                }
-
-                if(currentOwned == null){
-                    Log.e(LOG_TAG, "currentOwned is null");
-                    currentOwned = new StocksOwn(currentListItem.getPrice(), "", 0, currentListItem.getSymbol());
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
-
-                if(currentOwnednow.getSymbol().equals(currentListItem.getSymbol())){
-                    currentOwned = currentOwnednow;
-                }
-
-                if(currentOwned == null){
-                    Log.e(LOG_TAG, "currentOwned is null");
-                    currentOwned = new StocksOwn(currentListItem.getPrice(), "", 0, currentListItem.getSymbol());
-                }
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 

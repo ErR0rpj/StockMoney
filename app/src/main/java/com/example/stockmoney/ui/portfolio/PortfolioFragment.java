@@ -50,6 +50,9 @@ public class PortfolioFragment extends Fragment {
         TVtotalGain = root.findViewById(R.id.TVtotalGain);
         LISTholdings = root.findViewById(R.id.LISTholdings);
 
+        adapter = null;
+        stocksOwnList.clear();
+
         adapter = new HoldingsAdapter(getActivity(), stocksOwnList);
         LISTholdings.setAdapter(adapter);
 
@@ -61,7 +64,6 @@ public class PortfolioFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentUser.setFunds(snapshot.child("funds").getValue(Double.class));
                 valuation = valuation + currentUser.getFunds();
-                Log.e(LOG_TAG, "valuation after funds: " + Double.toString(valuation));
                 TVnetWorth.setText(Double.toString(valuation));
             }
 
@@ -70,15 +72,12 @@ public class PortfolioFragment extends Fragment {
             }
         });
 
-        //TODO: get stocksown items. Show them in list. Find networth by adding the current price from api.
-        //TODO: update stockown items every time buy or sell works. To make app fast.
-
         mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
         mDatabaseReference2.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
-                Log.e(LOG_TAG, currentOwnednow.getSymbol());
+
                 if(currentOwnednow != null){
 
                     if(currentPriceMap.containsKey(currentOwnednow.getSymbol())){
@@ -88,21 +87,22 @@ public class PortfolioFragment extends Fragment {
                         double profit;
                         profit = stockPriceNow - avgPriceBought;
                         currentOwnednow.setProfit(profit);
-                        adapter.add(currentOwnednow);
+                        if(currentOwnednow.getQuantity() > 0) {
+                            adapter.add(currentOwnednow);
+                        }
                     }
                     else{
                         Log.e(LOG_TAG, "First go to search fragment");
                     }
-                    stocksOwnList.add(currentOwnednow);
+
                 }
-                Log.e(LOG_TAG,"Valuation after own: " + Double.toString(valuation));
                 TVnetWorth.setText(Double.toString(valuation));
                 TVtotalGain.setText(Double.toString(valuation - 1000000));
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                //TODO: check if the app works properly even after the
+
             }
 
             @Override
