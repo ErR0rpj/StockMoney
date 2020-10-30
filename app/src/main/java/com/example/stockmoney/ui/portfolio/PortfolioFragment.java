@@ -32,14 +32,11 @@ public class PortfolioFragment extends Fragment {
 
     private static final String LOG_TAG = PortfolioFragment.class.getSimpleName();
 
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference, mDatabaseReference2;
     private HoldingsAdapter adapter;
 
     private double valuation = 0;
 
     private TextView TVnetWorth, TVtotalGain;
-    private ListView LISTholdings;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +45,7 @@ public class PortfolioFragment extends Fragment {
 
         TVnetWorth = root.findViewById(R.id.TVnetWorth);
         TVtotalGain = root.findViewById(R.id.TVtotalGain);
-        LISTholdings = root.findViewById(R.id.LISTholdings);
+        ListView LISTholdings = root.findViewById(R.id.LISTholdings);
 
         adapter = null;
         stocksOwnList.clear();
@@ -56,15 +53,15 @@ public class PortfolioFragment extends Fragment {
         adapter = new HoldingsAdapter(getActivity(), stocksOwnList);
         LISTholdings.setAdapter(adapter);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
 
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentUser.setFunds(snapshot.child("funds").getValue(Double.class));
                 valuation = valuation + currentUser.getFunds();
-                TVnetWorth.setText(Double.toString(valuation));
+                TVnetWorth.setText(String.format("₹ %.2f", valuation));
             }
 
             @Override
@@ -72,7 +69,7 @@ public class PortfolioFragment extends Fragment {
             }
         });
 
-        mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
+        DatabaseReference mDatabaseReference2 = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid()).child("stocksOwn");
         mDatabaseReference2.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -94,10 +91,9 @@ public class PortfolioFragment extends Fragment {
                     else{
                         Log.e(LOG_TAG, "First go to search fragment");
                     }
-
                 }
-                TVnetWorth.setText(Double.toString(valuation));
-                TVtotalGain.setText(Double.toString(valuation - 1000000));
+                TVnetWorth.setText(String.format("₹ %.2f", valuation));
+                TVtotalGain.setText(String.format("₹ %.2f", valuation - 1000000.00));
             }
 
             @Override

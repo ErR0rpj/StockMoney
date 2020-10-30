@@ -126,9 +126,9 @@ public class SearchFragment extends Fragment {
                     {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        Double price = Double.parseDouble(jsonObject.getString("price"));
-                        Double high = Double.parseDouble(jsonObject.getString("high"));
-                        Double low = Double.parseDouble(jsonObject.getString("low"));
+                        double price = Double.parseDouble(jsonObject.getString("price"));
+                        double high = Double.parseDouble(jsonObject.getString("high"));
+                        double low = Double.parseDouble(jsonObject.getString("low"));
                         String chg = jsonObject.getString("chg");
                         String chg_percent = jsonObject.getString("chg_percent");
                         String dateTime = jsonObject.getString("dateTime");

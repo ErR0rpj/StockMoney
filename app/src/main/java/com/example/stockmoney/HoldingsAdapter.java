@@ -47,9 +47,9 @@ public class HoldingsAdapter extends ArrayAdapter<StocksOwn> {
             return LISTholdings;
         }
 
-        TVavgPrice.setText(Double.toString(currentListItem.getAvgPrice()));
+        TVavgPrice.setText(String.format("%.2f", currentListItem.getAvgPrice()));
         TVsymbol_holdings.setText(currentListItem.getSymbol());
-        TVquantity_holdings.setText("Quantity: " + Double.toString(currentListItem.getQuantity()));
+        TVquantity_holdings.setText("Quantity: " + String.format("%d", currentListItem.getQuantity()));
 
         double profit = currentListItem.getProfit();
         if(profit < 0){
@@ -58,7 +58,7 @@ public class HoldingsAdapter extends ArrayAdapter<StocksOwn> {
         else{
             TVprofit.setTextColor(Color.GREEN);
         }
-        TVprofit.setText(Double.toString(profit));
+        TVprofit.setText(String.format("₹ %.2f", profit));
 
         return LISTholdings;
     }

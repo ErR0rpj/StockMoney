@@ -93,7 +93,7 @@ public class WatchlistFragment extends Fragment {
                 TextView TVname = v.findViewById(R.id.TVname);
                 TextView TVchg =  v.findViewById(R.id.TVchg);
 
-                TVprice.setText(Double.toString(price));
+                TVprice.setText(String.format("₹ %.2f", price));
 
                 if(chg.charAt(0)=='-'){
                     TVchg.setTextColor(Color.RED);
