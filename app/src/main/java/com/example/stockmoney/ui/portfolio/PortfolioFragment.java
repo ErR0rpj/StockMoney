@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.stockmoney.HoldingsAdapter;
+import com.example.stockmoney.HomeAdapterClass;
 import com.example.stockmoney.R;
 import com.example.stockmoney.data.StocksOwn;
 import com.google.firebase.database.ChildEventListener;
@@ -31,9 +34,12 @@ public class PortfolioFragment extends Fragment {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference, mDatabaseReference2;
+    private HoldingsAdapter adapter;
+
     private double valuation = 0;
 
     private TextView TVnetWorth, TVtotalGain;
+    private ListView LISTholdings;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +48,10 @@ public class PortfolioFragment extends Fragment {
 
         TVnetWorth = root.findViewById(R.id.TVnetWorth);
         TVtotalGain = root.findViewById(R.id.TVtotalGain);
+        LISTholdings = root.findViewById(R.id.LISTholdings);
+
+        adapter = new HoldingsAdapter(getActivity(), stocksOwnList);
+        LISTholdings.setAdapter(adapter);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users").child(currentUser.getUid());
@@ -70,13 +80,20 @@ public class PortfolioFragment extends Fragment {
                 StocksOwn currentOwnednow = snapshot.getValue(StocksOwn.class);
                 Log.e(LOG_TAG, currentOwnednow.getSymbol());
                 if(currentOwnednow != null){
-                    stocksOwnList.add(currentOwnednow);
+
                     if(currentPriceMap.containsKey(currentOwnednow.getSymbol())){
-                        valuation = valuation + (currentPriceMap.get(currentOwnednow.getSymbol()) * currentOwnednow.getQuantity());
+                        double stockPriceNow = currentPriceMap.get(currentOwnednow.getSymbol()) * currentOwnednow.getQuantity();
+                        double avgPriceBought = currentOwnednow.getAvgPrice() * currentOwnednow.getQuantity();
+                        valuation = valuation + stockPriceNow;
+                        double profit;
+                        profit = stockPriceNow - avgPriceBought;
+                        currentOwnednow.setProfit(profit);
+                        adapter.add(currentOwnednow);
                     }
                     else{
-                        Log.e(LOG_TAG, "FIrst go to search fragment");
+                        Log.e(LOG_TAG, "First go to search fragment");
                     }
+                    stocksOwnList.add(currentOwnednow);
                 }
                 Log.e(LOG_TAG,"Valuation after own: " + Double.toString(valuation));
                 TVnetWorth.setText(Double.toString(valuation));
