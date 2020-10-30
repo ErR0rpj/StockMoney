@@ -41,7 +41,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         ETuserName = view.findViewById(R.id.ETuserName);
-        ETmobile = view.findViewById(R.id.ETmobile);
+      //  ETmobile = view.findViewById(R.id.ETmobile);
         ETemail = view.findViewById(R.id.ETemail);
         userName_field = view.findViewById(R.id.username_field);
         funds_field = view.findViewById(R.id.funds_field);
