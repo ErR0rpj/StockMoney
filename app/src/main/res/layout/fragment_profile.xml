@@ -132,7 +132,7 @@
                         android:contextClickable="true"
                         android:fontFamily="sans-serif-light"
                         android:linksClickable="true"
-                        android:text="RANK"
+                        android:text="PROFIT/LOSS"
                         android:onClick="launchClick"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
