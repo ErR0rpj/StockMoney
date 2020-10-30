@@ -8,12 +8,25 @@
     android:orientation="vertical"
     tools:context=".StockDetailActivity">
 
+
+
+    <TextView
+        android:layout_marginLeft="95dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:text="SHARE DETAILS"
+        android:textStyle="bold"
+        android:textSize="30dp" />
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -21,7 +34,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Symbol"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
@@ -33,7 +46,7 @@
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -48,9 +61,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -58,7 +71,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Price"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
@@ -71,7 +84,7 @@
 
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -86,17 +99,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="High"
-            android:textSize="18sp"
+            android:text="Today's High"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
@@ -106,10 +119,9 @@
             android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
             android:text="0"
-
             android:textAlignment="textEnd"
-            android:textColor="@color/color_one"
-            android:textSize="18sp"
+            android:textColor="@color/buy"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -124,17 +136,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="Low"
-            android:textSize="18sp"
+            android:text="Today's Low"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
@@ -144,10 +156,9 @@
             android:layout_alignParentRight="true"
             android:fontFamily="sans-serif-light"
             android:text="0"
-
             android:textAlignment="textEnd"
-            android:textColor="@color/color_one"
-            android:textSize="18sp"
+            android:textColor="@color/sell"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -162,9 +173,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp">
 
         <TextView
@@ -172,7 +183,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Change"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
@@ -185,7 +196,7 @@
 
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -200,17 +211,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="Change Percent"
-            android:textSize="18sp"
+            android:text="Percent Change"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
@@ -223,7 +234,7 @@
 
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -235,6 +246,7 @@
         android:layout_marginRight="20dp"
         android:background="@color/color_two" />
 
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -248,8 +260,65 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@color/color_two" />
+
+    <TextView
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="GRAPHS COMING SOON....."
+        android:textStyle="bold"
+        android:textSize="20dp" />
+
+
+
+    <EditText
+        android:id="@+id/ETquantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ems="20"
+        android:hint="Enter quantity"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:inputType="number" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="Total Amount"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/totalamount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:fontFamily="sans-serif-light"
+            android:text="0"
+            android:textAlignment="textEnd"
+            android:textColor="@color/color_one"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
 
     <LinearLayout
+
+        android:layout_marginTop="20dp"
         android:id="@+id/LinearLayout02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -257,28 +326,29 @@
 
         <Button
             android:id="@+id/BTNbuy"
-            android:layout_width="10dp"
-            android:layout_height="100dp"
+            android:layout_width="30dp"
+            android:layout_height="115dp"
             android:layout_weight="1"
-            android:text="BUY"></Button>
+            android:backgroundTint="@color/buy"
+            android:text="BUY"
+            android:textSize="35dp"
+            android:textStyle="bold">
+
+        </Button>
 
         <Button
             android:id="@+id/BTNsell"
-            android:layout_width="10dp"
-            android:layout_height="100dp"
+            android:layout_width="30dp"
+            android:layout_height="115dp"
+            android:backgroundTint="@color/sell"
             android:layout_weight="1"
-            android:text="SELL"></Button>
-    </LinearLayout>
+            android:text="SELL"
+            android:textSize="35dp"
+            android:textStyle="bold">
 
-    <EditText
-        android:id="@+id/ETquantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:ems="10"
-        android:hint="Enter quantity"
-        android:inputType="number" />
+
+        </Button>
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -33,7 +33,7 @@ public class StockDetailActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference, mDatabaseReference2;
     private StocksOwn currentOwned;
 
-    private TextView TVsymbol, TVprice, TVhigh, TVlow, TVchg, TVchg_percent;
+    private TextView TVsymbol, TVprice, TVhigh, TVlow, TVchg, TVchg_percent,TVtotal_amount;
     private Button BTNbuy, BTNsell;
     private EditText ETquantity;
 
@@ -56,6 +56,7 @@ public class StockDetailActivity extends AppCompatActivity {
         BTNbuy = findViewById(R.id.BTNbuy);
         BTNsell = findViewById(R.id.BTNsell);
         ETquantity = findViewById(R.id.ETquantity);
+        TVtotal_amount = findViewById(R.id.totalamount);
 
         if(position == -1){
             Log.e(LOG_TAG, "position is -1, check immediately");
