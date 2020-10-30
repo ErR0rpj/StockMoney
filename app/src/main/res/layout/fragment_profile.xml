@@ -138,11 +138,11 @@
                         android:contextClickable="true"
                         android:fontFamily="sans-serif-light"
                         android:linksClickable="true"
-                        android:text="PROFIT/LOSS"
-                        android:textStyle="bold"
                         android:onClick="launchClick"
+                        android:text="Rank"
                         android:textColor="@color/white"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/rank_field"
