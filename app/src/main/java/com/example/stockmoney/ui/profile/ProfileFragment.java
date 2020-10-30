@@ -36,8 +36,8 @@ public class ProfileFragment extends Fragment {
         ETuserName.setText(currentUser.getUsername());
         ETemail.setText(currentUser.getEmail());
         userName_field.setText(currentUser.getUsername());
-        funds_field = view.findViewById(R.id.funds_field);
-        rank_field = view.findViewById(R.id.rank_field);
+        funds_field.setText(Double.toString(currentUser.getFunds()));
+        rank_field = view.findViewById(currentUser.getRank());
 
         return view;
     }
