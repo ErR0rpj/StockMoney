@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout"
@@ -8,16 +8,19 @@
     android:orientation="vertical"
     tools:context=".StockDetailActivity">
 
-
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1">
 
     <TextView
-        android:layout_marginLeft="95dp"
+        android:layout_marginLeft="80dp"
         android:layout_marginRight="30dp"
         android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:text="SHARE DETAILS"
         android:textStyle="bold"
-        android:textSize="30dp" />
+        android:textSize="35dp" />
 
 
 
@@ -34,7 +37,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Symbol"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
@@ -46,7 +49,7 @@
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -71,7 +74,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Price"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
@@ -84,7 +87,7 @@
 
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -109,7 +112,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Today's High"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
@@ -121,7 +124,7 @@
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/buycolor"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -146,7 +149,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Today's Low"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
@@ -158,7 +161,7 @@
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/sellcolor"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -183,7 +186,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Change"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
@@ -196,7 +199,7 @@
 
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -221,7 +224,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Percent Change"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
         <TextView
@@ -234,7 +237,7 @@
 
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -270,11 +273,13 @@
         android:id="@+id/ETquantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="140dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:ems="20"
         android:hint="Enter quantity"
+        android:textStyle="bold"
+        android:textSize="25dp"
         android:textColorHint="@color/colorPrimaryDark"
         android:inputType="number" />
 
@@ -291,7 +296,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
             android:text="Total Amount"
-            android:textSize="18sp"
+            android:textSize="25dp"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold" />
 
         <TextView
@@ -303,7 +309,7 @@
             android:text="0"
             android:textAlignment="textEnd"
             android:textColor="@color/color_one"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -343,5 +349,5 @@
         </Button>
     </LinearLayout>
 
-
-</LinearLayout>
+    </TableLayout>
+</ScrollView>
