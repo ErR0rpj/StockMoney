@@ -17,10 +17,7 @@ import static com.example.stockmoney.data.DataItems.currentUser;
 
 public class ProfileFragment extends Fragment {
 
-    EditText ETuserName;
-    EditText ETmobile;
-    EditText ETemail;
-    TextView email_field, userName_field, funds_field, rank_field;
+    TextView userName_field, funds_field, rank_field, ETuserName, ETemail, ETmobile;
 
     private final String LOG_TAG = ProfileFragment.class.getSimpleName();
 
@@ -32,17 +29,15 @@ public class ProfileFragment extends Fragment {
         ETuserName = view.findViewById(R.id.ETuserName);
         ETmobile = view.findViewById(R.id.ETmobile);
         ETemail = view.findViewById(R.id.ETemail);
-    //    email_field = view.findViewById(R.id.email_field);
         userName_field = view.findViewById(R.id.username_field);
         funds_field = view.findViewById(R.id.funds_field);
         rank_field = view.findViewById(R.id.rank_field);
 
         ETuserName.setText(currentUser.getUsername());
         ETemail.setText(currentUser.getEmail());
-      //  email_field.setText(currentUser.getEmail());
         userName_field.setText(currentUser.getUsername());
-//        funds_field.setText(MainActivity.funds);
-//        rank_field.setText(MainActivity.rank);
+        funds_field = view.findViewById(R.id.funds_field);
+        rank_field = view.findViewById(R.id.rank_field);
 
         return view;
     }
